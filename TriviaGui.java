@@ -11,6 +11,7 @@ import javax.swing.border.Border;
 
 public class TriviaGui extends JFrame implements ActionListener{
 
+	//This is a change
 	private JFrame startupFrame;
 	private JPanel gridPanel;
 	private JPanel scorePanel;
