@@ -1,6 +1,5 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -9,15 +8,16 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+//R.J. Hamilton
+
 public class TriviaGui extends JFrame implements ActionListener{
 
-	//This is a change
 	private JFrame startupFrame;
 	private JPanel gridPanel;
 	private JPanel scorePanel;
 	private JPanel buttonPanel;
 	private JButton[][] gridButtons;
-	private JButton quit, reset, newGame;
+	private JButton quit, newGame;
 	private JLabel[] genreLabels;
 	private GridLayout layout;
 	private int player1, player2, player3;
@@ -27,9 +27,37 @@ public class TriviaGui extends JFrame implements ActionListener{
 		player1 = 0;
 		player2 = 0;
 		player3 = 0;
-		gridPanel = new JPanel();
+		gridPanel = gridPanel();
 		scorePanel = scorePanel();
 		buttonPanel = buttonPanel();
+		
+		gridPanel.setLayout(layout);
+		startupFrame.add(gridPanel, BorderLayout.CENTER);
+		startupFrame.add(scorePanel, BorderLayout.LINE_END);
+		startupFrame.add(buttonPanel, BorderLayout.PAGE_END);
+		startupFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    startupFrame.pack();
+	    startupFrame.setSize(1000, 600);
+	    startupFrame.setLocationRelativeTo(null);
+	    startupFrame.setVisible(true);
+	}
+
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		if(e.getSource() == quit) {
+			JOptionPane pane = new JOptionPane();
+			dispose();
+			System.exit(0);
+		}
+		if(e.getSource() == newGame){
+			
+		}
+	}
+	
+	public JPanel gridPanel() {
+		JPanel gridPanel = new JPanel();
 		final int gridSize = 5;
 		Font labelFont = new Font("Tahoma", Font.BOLD, 26);
 		Border blackLine = BorderFactory.createLineBorder(Color.black);
@@ -69,29 +97,7 @@ public class TriviaGui extends JFrame implements ActionListener{
 				gridPanel.add(gridButtons[row][col]);
 			}
 		}
-		
-		
-		
-		
-		
-		gridPanel.setLayout(layout);
-		startupFrame.add(gridPanel, BorderLayout.CENTER);
-		startupFrame.add(scorePanel, BorderLayout.LINE_END);
-		startupFrame.add(buttonPanel, BorderLayout.PAGE_END);
-		startupFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    startupFrame.pack();
-	    startupFrame.setSize(1000, 600);
-	    startupFrame.setLocationRelativeTo(null);
-	    startupFrame.setVisible(true);
-	}
-
-
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource() == quit)
-			dispose();
-			System.exit(0);
+		return gridPanel;
 	}
 	
 	public JPanel scorePanel() {
@@ -121,32 +127,23 @@ public class TriviaGui extends JFrame implements ActionListener{
 		
 		return scores;
 	}
-	
-//	public JPanel scorePanel() {
-//		JPanel scores = new JPanel();
-//		JLabel player1 = new JLabel("Player 1:\n" + getPlayer3());
-//		JLabel player2 = new JLabel("Player 2:\n" + getPlayer3());
-//		JLabel player3 = new JLabel("Player 3:\n" + getPlayer3());
-//		scores.setLayout(new GridLayout(3, 1));
-//		
-//		scores.add(player1);
-//		scores.add(player2);
-//		scores.add(player3);
-//		
-//		return scores;
-//	}
-	
+
 	public JPanel buttonPanel() {
-		JPanel buttons = new JPanel();
-		JButton quit = new JButton("Quit");
+		JPanel buttonsPanel = new JPanel();
+		quit = new JButton("Quit");
 		quit.addActionListener(this);
-		JButton reset = new JButton("Reset");
-		JButton newGame = new JButton("New Game");
-		buttons.add(quit);
-		buttons.add(reset);
-		buttons.add(newGame);
+		newGame = new JButton("New Game");
+		newGame.addActionListener(this);
+		buttonsPanel.add(quit);
+		buttonsPanel.add(newGame);
 		
-		return buttons;
+		return buttonsPanel;
+	}
+	
+	public void reloadUI() {
+		this.player1 = 0;
+		this.player2 = 0;
+		this.player3 = 0;
 	}
 	
 	public int getPlayer1() {
@@ -161,10 +158,9 @@ public class TriviaGui extends JFrame implements ActionListener{
 		return player3;
 	}
 	
-	
 	public static void main(String[] args) {
 		TriviaGui game = new TriviaGui();
 		
 	}
-
+	
 }
