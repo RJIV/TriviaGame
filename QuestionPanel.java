@@ -156,7 +156,7 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 	}
 
 	public static void main(String[] args) {
-		QuestionPanel game = new QuestionPanel(10);
+		QuestionPanel game = new QuestionPanel(5);
 	}
 	private void answer(){
 		if(choiceA.isSelected()){
@@ -179,11 +179,11 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 
 			if(player == 1)
 				// change: the score that worth of value
-				score[0] = 100;
+				score[0] = q.getQuestionAt(index).getScore();
 			else if(player ==2)
-				score[1]=100;
+				score[1]=q.getQuestionAt(index).getScore();
 			else 
-				score[2]=100;
+				score[2]=q.getQuestionAt(index).getScore();
 		}
 		else
 			JOptionPane.showMessageDialog(frame, "That is Wrong");
