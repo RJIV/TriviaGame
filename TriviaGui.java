@@ -19,16 +19,40 @@ public class TriviaGui extends JFrame implements ActionListener {
 	private JButton quit, newGame;
 	private JLabel[] genreLabels;
 	private GridLayout layout;
+	private int[] playerScores;
 	private int player1, player2, player3;
 	
 	public TriviaGui() {
 		startupFrame = new JFrame("Trivia Game");
+		playerScores = new int[3];
 		player1 = 0;
 		player2 = 0;
 		player3 = 0;
 		gridPanel = gridPanel();
-		scorePanel = scorePanel();
 		buttonPanel = buttonPanel();
+		scorePanel = new JPanel();
+		Font font1 = new Font("Tahoma", Font.CENTER_BASELINE, 18);
+				
+		JLabel player1Label = new JLabel("   Player 1:   ");
+		JLabel player1Score = new JLabel("          " + getPlayer1() + "   ");
+		JLabel player2Label = new JLabel("   Player 2:   ");
+		JLabel player2Score = new JLabel("          " + getPlayer2() + "   ");
+		JLabel player3Label = new JLabel("   Player 3:   ");
+		JLabel player3Score = new JLabel("          " + getPlayer3() + "   ");
+		player1Label.setFont(font1);
+		player1Score.setFont(font1);
+		player2Label.setFont(font1);
+		player2Score.setFont(font1);
+		player3Label.setFont(font1);
+		player3Score.setFont(font1);
+		scorePanel.setLayout(new GridLayout(6, 1));
+		
+		scorePanel.add(player1Label);
+		scorePanel.add(player1Score);
+		scorePanel.add(player2Label);
+		scorePanel.add(player2Score);
+		scorePanel.add(player3Label);
+		scorePanel.add(player3Score);
 		
 		gridPanel.setLayout(layout);
 		startupFrame.add(gridPanel, BorderLayout.CENTER);
@@ -60,7 +84,11 @@ public class TriviaGui extends JFrame implements ActionListener {
 		for(int row = 0; row < 4; row++){
 			for(int col = 0; col < 5; col++){
 				if(e.getSource() == gridButtons[row][col]) {
-						QuestionPanel q = new QuestionPanel();
+					int index = row + col;
+					QuestionPanel q = new QuestionPanel(index);
+					playerScore = q.getPlayerScore();
+					player1 += playerScore[0];
+					
 				}
 			}
 		}
@@ -114,34 +142,6 @@ public class TriviaGui extends JFrame implements ActionListener {
 			}
 		}
 		return gridPanel;
-	}
-	
-	public JPanel scorePanel() {
-		JPanel scores = new JPanel();
-		Font font1 = new Font("Tahoma", Font.CENTER_BASELINE, 18);
-				
-		JLabel player1 = new JLabel("   Player 1:   ");
-		JLabel player1Score = new JLabel("          " + getPlayer1() + "   ");
-		JLabel player2 = new JLabel("   Player 2:   ");
-		JLabel player2Score = new JLabel("          " + getPlayer2() + "   ");
-		JLabel player3 = new JLabel("   Player 3:   ");
-		JLabel player3Score = new JLabel("          " + getPlayer3() + "   ");
-		player1.setFont(font1);
-		player1Score.setFont(font1);
-		player2.setFont(font1);
-		player2Score.setFont(font1);
-		player3.setFont(font1);
-		player3Score.setFont(font1);
-		scores.setLayout(new GridLayout(6, 1));
-		
-		scores.add(player1);
-		scores.add(player1Score);
-		scores.add(player2);
-		scores.add(player2Score);
-		scores.add(player3);
-		scores.add(player3Score);
-		
-		return scores;
 	}
 
 	public JPanel buttonPanel() {
