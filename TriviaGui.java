@@ -4,13 +4,12 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 
 //R.J. Hamilton
 
-public class TriviaGui extends JFrame implements ActionListener{
+public class TriviaGui extends JFrame implements ActionListener {
 
 	private JFrame startupFrame;
 	private JPanel gridPanel;
@@ -41,18 +40,21 @@ public class TriviaGui extends JFrame implements ActionListener{
 	    startupFrame.setLocationRelativeTo(null);
 	    startupFrame.setVisible(true);
 	}
-
-
-
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == quit) {
-			JOptionPane pane = new JOptionPane();
-			dispose();
-			System.exit(0);
+			int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?");
+			if(response == 0) {
+				dispose();
+				System.exit(0);
+			}
 		}
-		if(e.getSource() == newGame){
-			
+		if(e.getSource() == newGame) {
+			int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to start a new game?");
+			if(response == 0) {
+				reloadUI();
+			}
 		}
 	}
 	
@@ -144,6 +146,8 @@ public class TriviaGui extends JFrame implements ActionListener{
 		this.player1 = 0;
 		this.player2 = 0;
 		this.player3 = 0;
+		
+		gridPanel();
 	}
 	
 	public int getPlayer1() {
@@ -160,7 +164,5 @@ public class TriviaGui extends JFrame implements ActionListener{
 	
 	public static void main(String[] args) {
 		TriviaGui game = new TriviaGui();
-		
 	}
-	
 }
