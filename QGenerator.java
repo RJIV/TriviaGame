@@ -79,7 +79,7 @@ public class QGenerator {
 	 * @param QType
 	 * @return
 	 */
-	public Question createQue (String category, String QType) {
+	public Question createQue (String category, String QType, int score) {
 		TmdbSearch tmdbSearch = tmdbApi.getSearch();
 
 		//Variables
@@ -121,7 +121,7 @@ public class QGenerator {
 			} while ((condition == null) && (iterator.hasNext())) ;
 
 		}
-		Question que = new Question(queText, ans, aText, bText, cText, dText,1);
+		Question que = new Question(queText, ans, aText, bText, cText, dText,1,score);
 		randomizer(que);
 		return que;
 	}
@@ -129,30 +129,30 @@ public class QGenerator {
 	public void createQSet() {
 		QGenerator q = new QGenerator();
 
-		q.addQue(q.createQue("Iron Man", "year"));
-		q.addQue(q.createQue("Thor", "year"));
-		q.addQue(q.createQue("Spider Man", "year"));
-		q.addQue(q.createQue("Guardians of the Galaxy", "year"));
+		q.addQue(q.createQue("Iron Man", "year",100));
+		q.addQue(q.createQue("Thor", "year",200));
+		q.addQue(q.createQue("Spider Man", "year",300));
+		q.addQue(q.createQue("Guardians of the Galaxy", "year",400));
 
-		q.addQue(q.createQue("Cars", "year"));
-		q.addQue(q.createQue("Incredibles", "year"));
-		q.addQue(q.createQue("Bambi", "year"));
-		q.addQue(q.createQue("Toy Story", "year"));		
+		q.addQue(q.createQue("Cars", "year",100));
+		q.addQue(q.createQue("Incredibles", "year",200));
+		q.addQue(q.createQue("Bambi", "year",300));
+		q.addQue(q.createQue("Toy Story", "year",400));		
 
-		q.addQue(q.createQue("Worlds End", "year"));
-		q.addQue(q.createQue("Dead Man's Chest", "year"));
-		q.addQue(q.createQue("Curse of the Black Pearl", "year"));
-		q.addQue(q.createQue("Dead Men Tell No Tales", "year"));	
+		q.addQue(q.createQue("Worlds End", "year",100));
+		q.addQue(q.createQue("Dead Man's Chest", "year",200));
+		q.addQue(q.createQue("Curse of the Black Pearl", "year",300));
+		q.addQue(q.createQue("Dead Men Tell No Tales", "year",400));	
 
-		q.addQue(q.createQue("Star Wars New Hope", "year"));
-		q.addQue(q.createQue("Force Awakens", "year"));
-		q.addQue(q.createQue("Phantom Menace", "year"));
-		q.addQue(q.createQue("Last Jedi", "year"));
+		q.addQue(q.createQue("Star Wars New Hope", "year",100));
+		q.addQue(q.createQue("Force Awakens", "year",200));
+		q.addQue(q.createQue("Phantom Menace", "year",300));
+		q.addQue(q.createQue("Last Jedi", "year",400));
 
-		q.addQue(q.createQue("Princess Bride", "year"));
-		q.addQue(q.createQue("Hobbit", "year"));
-		q.addQue(q.createQue("Narnia", "year"));
-		q.addQue(q.createQue("Toy Story", "year"));			
+		q.addQue(q.createQue("Princess Bride", "year",100));
+		q.addQue(q.createQue("Hobbit", "year",200));
+		q.addQue(q.createQue("Narnia", "year",300));
+		q.addQue(q.createQue("Toy Story", "year",400));			
 
 	}
 

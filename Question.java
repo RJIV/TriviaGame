@@ -28,6 +28,9 @@ public class Question {
 	/**The Category of the question*/
 	protected int Category;
 	
+	/**The score of the question*/
+	protected int Score;
+	
 	/** Default constructor */
 	public Question() {
 		this.Que = "What is my favorite movie?";
@@ -42,7 +45,7 @@ public class Question {
 	}
 	
 	/** Definable constructor*/
-	public Question(String question, String ansKey, String ansA, String ansB, String ansC, String ansD, int category) {
+	public Question(String question, String ansKey, String ansA, String ansB, String ansC, String ansD, int category, int score) {
 		this.Que = question;
 		this.CorrectAns = ansKey; //FIXME: Randomize this answer and therefore the order of answers.
 		this.UserAns = null;
@@ -51,6 +54,8 @@ public class Question {
 		this.CChoice = ansC;
 		this.DChoice = ansD;
 		this.Category = category;
+		this.Score = score;
+		
 
 	}
 
@@ -61,6 +66,15 @@ public class Question {
 
 	public void setQue(String que) {
 		Que = que;
+	}
+	
+	/**Returns Question */
+	public int getScore() {
+		return Score;
+	}
+
+	public void setScore(int score) {
+		Score = score;
 	}
 	
 	/**Returns Correct Answer */
