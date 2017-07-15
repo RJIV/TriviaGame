@@ -26,7 +26,7 @@ public class Question {
 	protected String DChoice;
 	
 	/**The Category of the question*/
-	protected String Category;
+	protected int Category;
 	
 	/** Default constructor */
 	public Question() {
@@ -37,7 +37,20 @@ public class Question {
 		this.BChoice = "Star Wars 2";
 		this.CChoice = "Star Wars 7";
 		this.DChoice = "Star Wars 1";
-		this.Category = "Star Wars";
+		this.Category = 1;
+
+	}
+	
+	/** Definable constructor*/
+	public Question(String question, String ansKey, String ansA, String ansB, String ansC, String ansD, int category) {
+		this.Que = question;
+		this.CorrectAns = ansKey; //FIXME: Randomize this answer and therefore the order of answers.
+		this.UserAns = null;
+		this.AChoice = ansA;
+		this.BChoice = ansB;
+		this.CChoice = ansC;
+		this.DChoice = ansD;
+		this.Category = category;
 
 	}
 
@@ -100,15 +113,15 @@ public class Question {
 		DChoice = dChoice;
 	}
 
-	public String getCategory() {
+	public int getCategory() {
 		return Category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(int category) {
 		Category = category;
 	}
 	
-	/** checkAnswer - Returns true if user answer is the same as the correct answer*/
+	/** checkAnswer - Returns true if user answer is the same as the correct answer else returns false.*/
 	
 	public boolean checkAnswer () {
 		boolean correct = false;
@@ -117,5 +130,12 @@ public class Question {
 		
 		return correct;
 	}
+	
+    @Override
+    public String toString() {
+    	String str = ("Question: " + Que + "\nA:" + AChoice + "\nB: " + BChoice 
+    			+ "\nC: " + CChoice + "\nD: " + DChoice + "\nAnswer: " + CorrectAns + "\n\n");
+        return str;
+    }
 	
 }
