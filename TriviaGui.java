@@ -18,6 +18,12 @@ public class TriviaGui extends JFrame implements ActionListener {
 	private JButton[][] gridButtons;
 	private JButton quit, newGame;
 	private JLabel[] genreLabels;
+	private JLabel player1Label;
+	private JLabel player2Label;
+	private JLabel player3Label;
+	private JLabel player1Score;
+	private JLabel player2Score;
+	private JLabel player3Score;
 	private GridLayout layout;
 	private int[] playerScores;
 	private int player1, player2, player3;
@@ -33,12 +39,12 @@ public class TriviaGui extends JFrame implements ActionListener {
 		scorePanel = new JPanel();
 		Font font1 = new Font("Tahoma", Font.CENTER_BASELINE, 18);
 				
-		JLabel player1Label = new JLabel("   Player 1:   ");
-		JLabel player1Score = new JLabel("          " + getPlayer1() + "   ");
-		JLabel player2Label = new JLabel("   Player 2:   ");
-		JLabel player2Score = new JLabel("          " + getPlayer2() + "   ");
-		JLabel player3Label = new JLabel("   Player 3:   ");
-		JLabel player3Score = new JLabel("          " + getPlayer3() + "   ");
+		player1Label = new JLabel("   Player 1:   ");
+		player1Score = new JLabel("          " + getPlayer1() + "   ");
+		player2Label = new JLabel("   Player 2:   ");
+		player2Score = new JLabel("          " + getPlayer2() + "   ");
+		player3Label = new JLabel("   Player 3:   ");
+		player3Score = new JLabel("          " + getPlayer3() + "   ");
 		player1Label.setFont(font1);
 		player1Score.setFont(font1);
 		player2Label.setFont(font1);
@@ -84,9 +90,9 @@ public class TriviaGui extends JFrame implements ActionListener {
 		for(int row = 0; row < 4; row++){
 			for(int col = 0; col < 5; col++){
 				if(e.getSource() == gridButtons[row][col]) {
-					int index = row + col;
+					int index = 4*col + row;
 					QuestionPanel q = new QuestionPanel(index);
-					playerScore = q.getPlayerScore();
+					playerScores = q.getPlayerScore();
 					player1 += playerScore[0];
 					
 				}
