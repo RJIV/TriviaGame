@@ -21,55 +21,69 @@ import info.movito.themoviedbapi.model.people.PersonCrew;
 import java.util.Random;
 
 public class QGenerator {	
-	
-	/**
-	 * 
-	 */
+
+
+	/** tmdpApi Type: TmdbApi. Wrapper to interface with online database.*/
+
 	private static TmdbApi tmdbApi = new TmdbApi("658a202fc0f1e7c9d43bdeaadf192bba");
-	
-	/**
-	 * 
-	 */
+
+	/** sessionToken Type: SessionToken. SessionToken used to get account information from master user. */
 	private static SessionToken sessionToken = getSessionToken();
 
+	/** qlist Type: ArrayList<Question>. List of database generated question objects. */
 	private static  ArrayList<Question> qlist;
-	
-	/**
-	 * Default constructor
-	 */
+
+	/**QGenerator constructor initializes list, an array list of Questions.*/
 	public QGenerator() {
-	   qlist = new ArrayList<Question>();
-	    
+		qlist = new ArrayList<Question>();
+
 	}
-	
+
 	/**
-	 * 
-	 * @return
+	 * getSessionToken - Private function returns session token.
+	 * @return sessionToken Type: SessionToken
 	 */
-	public static SessionToken getSessionToken() {
-		
+	private static SessionToken getSessionToken() {
+
 		SessionToken sessionToken = new SessionToken("ecf8d70e3b5a6963d39f735f36dd84d1ff5e14c3");
 		return sessionToken;
 	}
+
 	
+	/**
+	 * addQue - Inserts Question object at the end of qlist, the ArrayList of question objects containing the 
+	 * generated question set.  
+	 * @param que Type: Question
+	 */
 	public void addQue(Question que){
 		qlist.add(que);
 	}
-	
+
+	/**
+	 * 
+	 * @param index
+	 * @return 
+	 */
 	public Question getQuestionAt(int index){
 		return qlist.get(index);
 	}
-	
+
 	public static ArrayList<Question> getQlist() {
 		return qlist;
 	}
-		
-	
+
+
+	/**
+	 * createQue - Uses Tmdb to generate a question of a certain type base on the given category. The categor
+	 * @param category
+	 * @param QType
+	 * @return
+	 */
 	public Question createQue (String category, String QType) {
 		TmdbSearch tmdbSearch = tmdbApi.getSearch();
-		
+
 		//Variables
-		
+
 		String queText = "N/a";
 		String ans = "A";
 		String aText = "0";
@@ -77,75 +91,76 @@ public class QGenerator {
 		String cText = "0";
 		String dText = "0";
 		int year = 0;
-		
-		
+
+
 		if (QType == "year"){
-			
+
 			int pgNum = 0;
-			
-			
+
+
 			MovieResultsPage results = tmdbSearch.searchMovie(category,year, "en", false, pgNum);
 			Iterator<MovieDb> iterator = results.iterator();
-			
+
 			String condition = null;
 			do
 			{
 				if(!iterator.hasNext()) {
-					 pgNum++;
-					 results = tmdbSearch.searchMovie(category,year, "en", false, pgNum);
+					pgNum++;
+					results = tmdbSearch.searchMovie(category,year, "en", false, pgNum);
 				}
 
 				MovieDb movie = iterator.next();
-				 condition = movie.getOverview();
-				 queText = ("This movie where: \n" + movie.getOverview() + "\nwas/will be released in?");
-				 ans = "A";
-				 aText = ("" + (Integer.parseInt(movie.getReleaseDate().substring(0,4))));
-				 bText = ("" + (Integer.parseInt(movie.getReleaseDate().substring(0,4))+1));
-				 cText = ("" + (Integer.parseInt(movie.getReleaseDate().substring(0,4))-1));
-				 dText = ("" + (Integer.parseInt(movie.getReleaseDate().substring(0,4))-2));
+				condition = movie.getOverview();
+				queText = ("This movie where: \n" + condition.substring(0,condition.indexOf('.')+1)
+							+ "\nwas/will be released?");
+				ans = "A";
+				aText = ("" + (Integer.parseInt(movie.getReleaseDate().substring(0,4))));
+				bText = ("" + (Integer.parseInt(movie.getReleaseDate().substring(0,4))+1));
+				cText = ("" + (Integer.parseInt(movie.getReleaseDate().substring(0,4))-1));
+				dText = ("" + (Integer.parseInt(movie.getReleaseDate().substring(0,4))-2));
 			} while ((condition == null) && (iterator.hasNext())) ;
-			
+
 		}
 		Question que = new Question(queText, ans, aText, bText, cText, dText,1);
 		randomizer(que);
 		return que;
 	}
-	
+
 	public void createQSet() {
 		QGenerator q = new QGenerator();
-		
+
 		q.addQue(q.createQue("Iron Man", "year"));
 		q.addQue(q.createQue("Thor", "year"));
 		q.addQue(q.createQue("Spider Man", "year"));
 		q.addQue(q.createQue("Guardians of the Galaxy", "year"));
-		
+
 		q.addQue(q.createQue("Cars", "year"));
 		q.addQue(q.createQue("Incredibles", "year"));
 		q.addQue(q.createQue("Bambi", "year"));
 		q.addQue(q.createQue("Toy Story", "year"));		
-		
+
 		q.addQue(q.createQue("Worlds End", "year"));
 		q.addQue(q.createQue("Dead Man's Chest", "year"));
 		q.addQue(q.createQue("Curse of the Black Pearl", "year"));
 		q.addQue(q.createQue("Dead Men Tell No Tales", "year"));	
-		
-		q.addQue(q.createQue("New Hope", "year"));
+
+		q.addQue(q.createQue("Star Wars New Hope", "year"));
 		q.addQue(q.createQue("Force Awakens", "year"));
 		q.addQue(q.createQue("Phantom Menace", "year"));
 		q.addQue(q.createQue("Last Jedi", "year"));
-		
+
 		q.addQue(q.createQue("Princess Bride", "year"));
 		q.addQue(q.createQue("Hobbit", "year"));
 		q.addQue(q.createQue("Narnia", "year"));
 		q.addQue(q.createQue("Toy Story", "year"));			
-		
+
 	}
-	
-	
-	
+
+
+
 	private static void randomizer (Question question) {
-        Random rand = new Random();
-		
+		Random rand = new Random();
+
 		String ans = question.getCorrectAns();
 		String aText = question.getAChoice();
 		String bText = question.getBChoice();
@@ -333,54 +348,55 @@ public class QGenerator {
 					}
 				}
 			}
-		  i++;	
+			i++;	
 		}//END WHILE LOOP
-		
-		 question.setCorrectAns(ans);
-		 question.setAChoice(aText);
-		 question.setBChoice(bText);
-		 question.setCChoice(cText);
-		 question.setDChoice(dText);
-		
-	}
+
+		question.setCorrectAns(ans);
+		question.setAChoice(aText);
+		question.setBChoice(bText);
+		question.setCChoice(cText);
+		question.setDChoice(dText);
+
+			}
 	
 	public static void main(final String[] args) {	
 		QGenerator q = new QGenerator();
-		
-		q.addQue(q.createQue("Cars", "year"));
-		q.addQue(q.createQue("Star Wars", "year"));
-		q.addQue(q.createQue("Spider Man", "year"));
-		
-		System.out.println(q.getQuestionAt(0).toString());
-		System.out.println(q.getQuestionAt(1).toString());
-		System.out.println(q.getQuestionAt(2).toString());
-		
+		q.createQSet();
+	int j = 0;
+	
+	
+	
+	while (j < 16) {	
+		System.out.println(q.getQuestionAt(j).toString());
+
+		j++;
+	}
 		
 
 	}
+		 
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	}
 
 
