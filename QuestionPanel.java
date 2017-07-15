@@ -3,19 +3,24 @@ package project;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-
-public class QuestionPanel extends JFrame implements ActionListener,KeyListener {
+public class QuestionPanel extends JFrame implements ActionListener, KeyListener {
 
 	private JTextArea question;
 	private JLabel playerterm;
-	private int[] player;
+	private int player;
+	private int[] score;
 	private JPanel Qpanel;
+	private JPanel Wpanel;
 	private JPanel Cpanel;
+	private JPanel Bpanel;
 	private JFrame frame;
 	private JLabel timer;
 	private JRadioButton choiceA;
@@ -23,36 +28,43 @@ public class QuestionPanel extends JFrame implements ActionListener,KeyListener 
 	private JRadioButton choiceC;
 	private JRadioButton choiceD;
 	private JButton submit;
-	private  ButtonGroup bG;
+	private ButtonGroup bG;
+	private int index;
 	QGenerator q;
 	Countdown count;
-	
-	public QuestionPanel(int index){
-		JOptionPane.showMessageDialog(frame,"Player1 press z player 2 press m");
-		player = new int[2];
+
+	public QuestionPanel(int index) {
+		JOptionPane.showMessageDialog(frame, "Player1 press z player 2 press m player 3 press q");
+		player = 0;
+		score = new int[3];
+		this.index = index;
 		q = new QGenerator();
 		q.createQSet();
 		frame = new JFrame();
 		Qpanel = new JPanel();
 		Cpanel = new JPanel();
+		Bpanel = new JPanel();
+		Wpanel = new JPanel();
 		bG = new ButtonGroup();
 		playerterm = new JLabel();
-		submit = new JButton();
+
+		submit = new JButton("Submit");
 		submit.addActionListener(this);
+		Bpanel.add(submit);
 
 		Font font1 = new Font("Tahoma", Font.CENTER_BASELINE, 18);
-		
-		
-		question = new JTextArea(10,40);
+
+		question = new JTextArea(10, 40);
 		question.setFont(font1);
 		question.setText(q.getQuestionAt(index).getQue());
 		question.setLineWrap(true);
 		question.setWrapStyleWord(true);
-		question.setBackground(Color.LIGHT_GRAY);
+		question.setBackground(frame.getBackground());
 		question.setEditable(false);
 		timer = new JLabel();
+		playerterm.setFont(font1);
+		Wpanel.add(playerterm);
 
-		
 		choiceA = new JRadioButton(q.getQuestionAt(index).getAChoice());
 		choiceB = new JRadioButton(q.getQuestionAt(index).getBChoice());
 		choiceC = new JRadioButton(q.getQuestionAt(index).getCChoice());
@@ -61,88 +73,124 @@ public class QuestionPanel extends JFrame implements ActionListener,KeyListener 
 		choiceB.addActionListener(this);
 		choiceC.addActionListener(this);
 		choiceD.addActionListener(this);
-		
+
 		bG.add(choiceA);
 		bG.add(choiceB);
 		bG.add(choiceC);
 		bG.add(choiceD);
-		
+
 		Qpanel.add(question);
 		Cpanel.add(choiceA);
 		Cpanel.add(choiceB);
 		Cpanel.add(choiceC);
 		Cpanel.add(choiceD);
+
+		frame.add(Qpanel, BorderLayout.NORTH);
+		frame.add(Cpanel, BorderLayout.SOUTH);
+		frame.add(Wpanel, BorderLayout.WEST);
+		frame.add(Bpanel, BorderLayout.CENTER);
+
+		frame.pack();
+		frame.setSize(1000, 600);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+
+		choiceA.setEnabled(false);
+		choiceB.setEnabled(false);
+		choiceC.setEnabled(false);
+		choiceD.setEnabled(false);
+		frame.addKeyListener(this);
+		frame.setFocusable(true);
+		submit.setEnabled(false);
+		// frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		// s= this.scoreboard;
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
 		
-		frame.add(Qpanel,BorderLayout.NORTH);
-		frame.add(Cpanel,BorderLayout.SOUTH);		
-	    frame.pack();
-	    frame.setSize(1000, 600);
-	    frame.setLocationRelativeTo(null);
-	    frame.add(submit);
-	    
-	    frame.setVisible(true);
-	    choiceA.setEnabled(false);
-	    choiceB.setEnabled(false);
-	    choiceC.setEnabled(false);
-	    choiceD.setEnabled(false);
-	    frame.addKeyListener(this); 
-	    frame.setFocusable(true);
-	    //frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-	    
-	    }
-	    
-	@Override
-	 public void keyTyped( KeyEvent e ) {
-     }
-	 
-	 @Override
-     public void keyPressed( KeyEvent e ) {
-     	if(e.getKeyCode() == KeyEvent.VK_Z){
-    	    choiceA.setEnabled(true);
-    	    choiceB.setEnabled(true);
-    	    choiceC.setEnabled(true);
-    	    choiceD.setEnabled(true);
-    	    playerterm.setText("Player 1");
-    	    
-     	}
-     	 if(e.getKeyCode() == KeyEvent.VK_M){
-    	    choiceA.setEnabled(true);
-    	    choiceB.setEnabled(true);
-    	    choiceC.setEnabled(true);
-    	    choiceD.setEnabled(true);
-    	    playerterm.setText("Player 2");
-     	}
-     		
-     	 if(e.getKeyCode() == KeyEvent.VK_Q){
-     	    choiceA.setEnabled(true);
-     	    choiceB.setEnabled(true);
-     	    choiceC.setEnabled(true);
-     	    choiceD.setEnabled(true);
-     	    playerterm.setText("Player 3");
-      	}
-     }
-	 
-	 @Override
-     public void keyReleased( KeyEvent e ) {
+		if (e.getKeyCode() == KeyEvent.VK_Z) {
+			choiceA.setEnabled(true);
+			choiceB.setEnabled(true);
+			choiceC.setEnabled(true);
+			choiceD.setEnabled(true);
+			playerterm.setText("Player 1");
+			player =1;
+			
+		}
+		if (e.getKeyCode() == KeyEvent.VK_M) {
+			choiceA.setEnabled(true);
+			choiceB.setEnabled(true);
+			choiceC.setEnabled(true);
+			choiceD.setEnabled(true);
+			playerterm.setText("Player 2");
+			player =2;
+		}
 
-     }
-
-	
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if(e.getSource()==submit){
-			player[0]=100;
+		if (e.getKeyCode() == KeyEvent.VK_Q) {
+			choiceA.setEnabled(true);
+			choiceB.setEnabled(true);
+			choiceC.setEnabled(true);
+			choiceD.setEnabled(true);
+			playerterm.setText("Player 3");
+			player =3 ;
 		}
 	}
-	
-	public int getPlayerScore(){
-		return player[0];
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		submit.setEnabled(true);
+		if (e.getSource() == submit) {
+			answer();
+		}
+		
+
 	}
 
-	
-	public static void main(String arg[]) {
-		QuestionPanel gui = new QuestionPanel(10);
+	@Override
+	public void keyReleased(KeyEvent e) {
+	}
 
+	@Override
+	public void keyTyped(KeyEvent e) {
+	}
+
+	public static void main(String[] args) {
+		QuestionPanel game = new QuestionPanel(10);
+	}
+	private void answer(){
+		if(choiceA.isSelected()){
+			q.getQuestionAt(index).setUserAns("A");
+		}
+		else if(choiceB.isSelected()){
+			q.getQuestionAt(index).setUserAns("B");
+		}
+		else if(choiceC.isSelected()){
+			q.getQuestionAt(index).setUserAns("C");
+		}
+		else if(choiceD.isSelected()){
+			q.getQuestionAt(index).setUserAns("D");
+		}
+		
+		System.out.println(""+q.getQuestionAt(index).getCorrectAns());
+		if(q.getQuestionAt(index).checkAnswer()){
+			//System.out.println("correct");
+			JOptionPane.showMessageDialog(frame, "That is correct");
+
+			if(player == 1)
+				// change: the score that worth of value
+				score[0] = 100;
+			else if(player ==2)
+				score[1]=100;
+			else 
+				score[2]=100;
+		}
+		else
+			JOptionPane.showMessageDialog(frame, "That is Wrong");
+		// pass the score
+		System.out.println(""+score[0]+" "+score[1]+" "+score[2]);	
+		
+		
 	}
 
 }
