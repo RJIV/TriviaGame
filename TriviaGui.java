@@ -50,13 +50,22 @@ public class TriviaGui extends JFrame implements ActionListener {
 				System.exit(0);
 			}
 		}
+		
 		if(e.getSource() == newGame) {
 			int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to start a new game?");
 			if(response == 0) {
 				reloadUI();
 			}
 		}
+		for(int row = 0; row < 4; row++){
+			for(int col = 0; col < 5; col++){
+				if(e.getSource() == gridButtons[row][col]) {
+						QuestionPanel q = new QuestionPanel();
+				}
+			}
+		}
 	}
+	
 	
 	public JPanel gridPanel() {
 		JPanel gridPanel = new JPanel();
@@ -67,11 +76,11 @@ public class TriviaGui extends JFrame implements ActionListener {
 		genreLabels = new JLabel[gridSize];
 		gridButtons = new JButton[4][5];
 		
-		genreLabels[0] = new JLabel("Comedy", SwingConstants.CENTER);
-		genreLabels[1] = new JLabel("Superhero", SwingConstants.CENTER);
-		genreLabels[2] = new JLabel("Action", SwingConstants.CENTER);
-		genreLabels[3] = new JLabel("Romance", SwingConstants.CENTER);
-		genreLabels[4] = new JLabel("Sci-Fi", SwingConstants.CENTER);
+		genreLabels[0] = new JLabel("Marvel", SwingConstants.CENTER);
+		genreLabels[1] = new JLabel("Animation", SwingConstants.CENTER);
+		genreLabels[2] = new JLabel("Pirates", SwingConstants.CENTER);
+		genreLabels[3] = new JLabel("Star Wars", SwingConstants.CENTER);
+		genreLabels[4] = new JLabel("Fantasy", SwingConstants.CENTER);
 		
 		for(int col = 0; col < 5; col++) {
 			genreLabels[col].setFont(labelFont);
@@ -83,20 +92,25 @@ public class TriviaGui extends JFrame implements ActionListener {
 		
 		for(int col = 0; col < 5; col++) {
 			gridButtons[0][col] = new JButton("100");
+			gridButtons[0][col].addActionListener(this);
 		}
 		for(int col = 0; col < 5; col++) {
 			gridButtons[1][col] = new JButton("200");
+			gridButtons[1][col].addActionListener(this);
 		}
 		for(int col = 0; col < 5; col++) {
 			gridButtons[2][col] = new JButton("300");
+			gridButtons[2][col].addActionListener(this);
 		}
 		for(int col = 0; col < 5; col++) {
 			gridButtons[3][col] = new JButton("400");
+			gridButtons[3][col].addActionListener(this);
 		}
 		
 		for(int row = 0; row < 4; row++) {
 			for(int col = 0; col < 5; col++) {
 				gridPanel.add(gridButtons[row][col]);
+				
 			}
 		}
 		return gridPanel;
