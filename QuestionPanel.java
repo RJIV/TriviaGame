@@ -1,4 +1,6 @@
-package project;
+
+package edu.gvsu.cis350.triviaGame;
+//Zhen's: package project;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -32,9 +34,13 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 	private int index;
 	QGenerator q;
 	Countdown count;
+	score s;
 
-	public QuestionPanel(int index) {
-		JOptionPane.showMessageDialog(frame, "Player1 press z player 2 press m player 3 press q");
+	public QuestionPanel(int index,score ScoreBoard) {
+		JOptionPane.showMessageDialog(frame, "Player Buzzers\n\nP1: Z   P2: M   P3: Q ");
+		
+		s = ScoreBoard;
+		
 		player = 0;
 		score = new int[3];
 		this.index = index;
@@ -103,7 +109,6 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 		frame.setFocusable(true);
 		submit.setEnabled(false);
 		// frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		// s= this.scoreboard;
 	}
 
 	@Override
@@ -142,6 +147,7 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 		submit.setEnabled(true);
 		if (e.getSource() == submit) {
 			answer();
+			frame.setVisible(false);
 		}
 		
 
@@ -155,9 +161,10 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 	public void keyTyped(KeyEvent e) {
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		QuestionPanel game = new QuestionPanel(5);
-	}
+	}*/
+	
 	private void answer(){
 		if(choiceA.isSelected()){
 			q.getQuestionAt(index).setUserAns("A");
@@ -173,23 +180,35 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 		}
 		
 		System.out.println(""+q.getQuestionAt(index).getCorrectAns());
-		if(q.getQuestionAt(index).checkAnswer()){
+		
+		if(q.getQuestionAt(index).checkAnswer()) {
 			//System.out.println("correct");
-			JOptionPane.showMessageDialog(frame, "That is correct");
+			JOptionPane.showMessageDialog(frame, "Correct");
 
 			if(player == 1)
 				// change: the score that worth of value
-				score[0] = q.getQuestionAt(index).getScore();
+				s.setplayer1(q.getQuestionAt(index).getScore());
 			else if(player ==2)
-				score[1]=q.getQuestionAt(index).getScore();
-			else 
-				score[2]=q.getQuestionAt(index).getScore();
+				s.setplayer2(q.getQuestionAt(index).getScore());
+			else if(player == 3)
+				s.setplayer3(q.getQuestionAt(index).getScore());
+			
+			System.out.println("P1: "+s.getplayer1()+"  P2: "+s.getplayer2()+"  P3: "+s.getplayer3());
 		}
 		else
-			JOptionPane.showMessageDialog(frame, "That is Wrong");
+		{
+			JOptionPane.showMessageDialog(frame, "Incorrect");
 		// pass the score
-		System.out.println(""+score[0]+" "+score[1]+" "+score[2]);	
-		
+			
+			if(player == 1)
+				// change: the score that worth of value
+				s.setplayer1(q.getQuestionAt(index).getScore()*-1);
+			else if(player ==2)
+				s.setplayer2(q.getQuestionAt(index).getScore()*-1);
+			else 
+				s.setplayer3(q.getQuestionAt(index).getScore()*-1);
+		    System.out.println("P1: "+s.getplayer1()+"  P2: "+s.getplayer2()+"  P3: "+s.getplayer3());	
+		}
 		
 	}
 

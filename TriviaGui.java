@@ -1,3 +1,5 @@
+package edu.gvsu.cis350.triviaGame;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -26,25 +28,27 @@ public class TriviaGui extends JFrame implements ActionListener {
 	private JLabel player3Score;
 	private GridLayout layout;
 	private int[] playerScores;
-	private int player1, player2, player3;
+	private score ScoreBoard;
+	
 	
 	public TriviaGui() {
+		
+		
+		ScoreBoard = new score();
+		
 		startupFrame = new JFrame("Trivia Game");
 		playerScores = new int[3];
-		player1 = 0;
-		player2 = 0;
-		player3 = 0;
 		gridPanel = gridPanel();
 		buttonPanel = buttonPanel();
 		scorePanel = new JPanel();
 		Font font1 = new Font("Tahoma", Font.CENTER_BASELINE, 18);
 				
 		player1Label = new JLabel("   Player 1:   ");
-		player1Score = new JLabel("          " + getPlayer1() + "   ");
+		player1Score = new JLabel("          " + ScoreBoard.getplayer1() + "   ");
 		player2Label = new JLabel("   Player 2:   ");
-		player2Score = new JLabel("          " + getPlayer2() + "   ");
+		player2Score = new JLabel("          " + ScoreBoard.getplayer2() + "   ");
 		player3Label = new JLabel("   Player 3:   ");
-		player3Score = new JLabel("          " + getPlayer3() + "   ");
+		player3Score = new JLabel("          " + ScoreBoard.getplayer3() + "   ");
 		player1Label.setFont(font1);
 		player1Score.setFont(font1);
 		player2Label.setFont(font1);
@@ -91,13 +95,11 @@ public class TriviaGui extends JFrame implements ActionListener {
 			for(int col = 0; col < 5; col++){
 				if(e.getSource() == gridButtons[row][col]) {
 					int index = 4*col + row;
-					QuestionPanel q = new QuestionPanel(index);
-					playerScores = q.getPlayerScore();
-					player1 += playerScore[0];
-					
+					QuestionPanel q = new QuestionPanel(index,ScoreBoard);	
 				}
 			}
 		}
+		updateScore();
 	}
 	
 	
@@ -162,24 +164,15 @@ public class TriviaGui extends JFrame implements ActionListener {
 		return buttonsPanel;
 	}
 	
+	public void updateScore() {
+		player1Score.setText("          " + ScoreBoard.getplayer1() + "   ");
+		player2Score.setText("          " + ScoreBoard.getplayer2() + "   ");
+		player3Score.setText("          " + ScoreBoard.getplayer3() + "   ");
+	}
+	
 	public void reloadUI() {
-		this.player1 = 0;
-		this.player2 = 0;
-		this.player3 = 0;
-		
+		ScoreBoard.clearScore();
 		gridPanel();
-	}
-	
-	public int getPlayer1() {
-		return player1;
-	}
-	
-	public int getPlayer2() {
-		return player2;
-	}
-	
-	public int getPlayer3() {
-		return player3;
 	}
 	
 	public static void main(String[] args) {
