@@ -1,7 +1,3 @@
-
-package edu.gvsu.cis350.triviaGame;
-//Zhen's: package project;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -34,10 +30,10 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 	private int index;
 	QGenerator q;
 	Countdown count;
-	score s;
+	Score s;
 
-	public QuestionPanel(int index,score ScoreBoard) {
-		JOptionPane.showMessageDialog(frame, "Player Buzzers\n\nP1: Z   P2: M   P3: Q ");
+	public QuestionPanel(int index, Score ScoreBoard) {
+		JOptionPane.showMessageDialog(frame, "Player Buzzers\n\n  Player 1: Z\n  Player 2: M\n  Player 3: Q ");
 		
 		s = ScoreBoard;
 		
@@ -59,6 +55,7 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 		Bpanel.add(submit);
 
 		Font font1 = new Font("Tahoma", Font.CENTER_BASELINE, 18);
+		Font font2 = new Font("Tahoma", Font.CENTER_BASELINE, 28);
 
 		question = new JTextArea(10, 40);
 		question.setFont(font1);
@@ -75,6 +72,10 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 		choiceB = new JRadioButton(q.getQuestionAt(index).getBChoice());
 		choiceC = new JRadioButton(q.getQuestionAt(index).getCChoice());
 		choiceD = new JRadioButton(q.getQuestionAt(index).getDChoice());
+		choiceA.setFont(font2);
+		choiceB.setFont(font2);
+		choiceC.setFont(font2);
+		choiceD.setFont(font2);
 		choiceA.addActionListener(this);
 		choiceB.addActionListener(this);
 		choiceC.addActionListener(this);
@@ -165,21 +166,21 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 		QuestionPanel game = new QuestionPanel(5);
 	}*/
 	
-	private void answer(){
+	private void answer() {
 		if(choiceA.isSelected()){
 			q.getQuestionAt(index).setUserAns("A");
 		}
-		else if(choiceB.isSelected()){
+		else if(choiceB.isSelected()) {
 			q.getQuestionAt(index).setUserAns("B");
 		}
-		else if(choiceC.isSelected()){
+		else if(choiceC.isSelected()) {
 			q.getQuestionAt(index).setUserAns("C");
 		}
-		else if(choiceD.isSelected()){
+		else if(choiceD.isSelected()) {
 			q.getQuestionAt(index).setUserAns("D");
 		}
 		
-		System.out.println(""+q.getQuestionAt(index).getCorrectAns());
+		//System.out.println(""+q.getQuestionAt(index).getCorrectAns());
 		
 		if(q.getQuestionAt(index).checkAnswer()) {
 			//System.out.println("correct");
@@ -192,8 +193,6 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 				s.setplayer2(q.getQuestionAt(index).getScore());
 			else if(player == 3)
 				s.setplayer3(q.getQuestionAt(index).getScore());
-			
-			System.out.println("P1: "+s.getplayer1()+"  P2: "+s.getplayer2()+"  P3: "+s.getplayer3());
 		}
 		else
 		{
@@ -207,7 +206,6 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 				s.setplayer2(q.getQuestionAt(index).getScore()*-1);
 			else 
 				s.setplayer3(q.getQuestionAt(index).getScore()*-1);
-		    System.out.println("P1: "+s.getplayer1()+"  P2: "+s.getplayer2()+"  P3: "+s.getplayer3());	
 		}
 		
 	}

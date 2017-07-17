@@ -1,5 +1,3 @@
-package edu.gvsu.cis350.triviaGame;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -28,13 +26,13 @@ public class TriviaGui extends JFrame implements ActionListener {
 	private JLabel player3Score;
 	private GridLayout layout;
 	private int[] playerScores;
-	private score ScoreBoard;
+	private Score scoreBoard;
 	
 	
 	public TriviaGui() {
 		
 		
-		ScoreBoard = new score();
+		scoreBoard = new Score();
 		
 		startupFrame = new JFrame("Trivia Game");
 		playerScores = new int[3];
@@ -44,11 +42,11 @@ public class TriviaGui extends JFrame implements ActionListener {
 		Font font1 = new Font("Tahoma", Font.CENTER_BASELINE, 18);
 				
 		player1Label = new JLabel("   Player 1:   ");
-		player1Score = new JLabel("          " + ScoreBoard.getplayer1() + "   ");
+		player1Score = new JLabel("          " + scoreBoard.getplayer1() + "   ");
 		player2Label = new JLabel("   Player 2:   ");
-		player2Score = new JLabel("          " + ScoreBoard.getplayer2() + "   ");
+		player2Score = new JLabel("          " + scoreBoard.getplayer2() + "   ");
 		player3Label = new JLabel("   Player 3:   ");
-		player3Score = new JLabel("          " + ScoreBoard.getplayer3() + "   ");
+		player3Score = new JLabel("          " + scoreBoard.getplayer3() + "   ");
 		player1Label.setFont(font1);
 		player1Score.setFont(font1);
 		player2Label.setFont(font1);
@@ -93,9 +91,11 @@ public class TriviaGui extends JFrame implements ActionListener {
 		}
 		for(int row = 0; row < 4; row++){
 			for(int col = 0; col < 5; col++){
+				updateScore();
 				if(e.getSource() == gridButtons[row][col]) {
 					int index = 4*col + row;
-					QuestionPanel q = new QuestionPanel(index,ScoreBoard);	
+					QuestionPanel q = new QuestionPanel(index, scoreBoard);	
+					gridButtons[row][col].setEnabled(false);
 				}
 			}
 		}
@@ -156,22 +156,22 @@ public class TriviaGui extends JFrame implements ActionListener {
 		JPanel buttonsPanel = new JPanel();
 		quit = new JButton("Quit");
 		quit.addActionListener(this);
-		newGame = new JButton("New Game");
-		newGame.addActionListener(this);
+		//newGame = new JButton("New Game");
+		//newGame.addActionListener(this);
 		buttonsPanel.add(quit);
-		buttonsPanel.add(newGame);
+		//buttonsPanel.add(newGame);
 		
 		return buttonsPanel;
 	}
 	
 	public void updateScore() {
-		player1Score.setText("          " + ScoreBoard.getplayer1() + "   ");
-		player2Score.setText("          " + ScoreBoard.getplayer2() + "   ");
-		player3Score.setText("          " + ScoreBoard.getplayer3() + "   ");
+		player1Score.setText("          " + scoreBoard.getplayer1() + "   ");
+		player2Score.setText("          " + scoreBoard.getplayer2() + "   ");
+		player3Score.setText("          " + scoreBoard.getplayer3() + "   ");
 	}
 	
 	public void reloadUI() {
-		ScoreBoard.clearScore();
+		scoreBoard.clearScore();
 		gridPanel();
 	}
 	

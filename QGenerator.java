@@ -1,5 +1,3 @@
-package edu.gvsu.cis350.triviaGame;
-
 import java.util.Iterator;
 import java.util.ArrayList;
 import info.movito.themoviedbapi.TmdbAccount;

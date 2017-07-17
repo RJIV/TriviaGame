@@ -1,7 +1,3 @@
-package edu.gvsu.cis350.triviaGame;
-
-
-
 public class Question {
 	
 	/**The Prompted question */
