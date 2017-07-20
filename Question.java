@@ -1,150 +1,247 @@
+package edu.gvsu.cis350.triviaGame;
+
+
+/**
+ * 
+ * @author Joseph Dubois
+ * Question entity class contains all the information associated wiht a single
+ * jeopardy style trivia question.
+ *
+ */
 public class Question {
 	
-	/**The Prompted question */
-	protected String Que;
+	/**The Prompted question. */
+	private String que;
 	
-	/**The single character answer to the question*/
-	protected String CorrectAns;
+	/**The single character answer to the question.*/
+	private String correctAns;
 	
-	/**The user's guessed answer to the question*/
-	protected String UserAns;
+	/**The user's guessed answer to the question.*/
+	private String userAns;
 	
-	/**The A choice*/
-	protected String AChoice;
+	/**The A choice.*/
+	private String aChoice;
 	
-	/**The B choice*/
-	protected String BChoice;
+	/**The B choice.*/
+	private String bChoice;
 	
-	/**The C choice*/
-	protected String CChoice;
+	/**The C choice.*/
+	private String cChoice;
 	
-	/**The D choice*/
-	protected String DChoice;
+	/**The D choice.*/
+	private String dChoice;
 	
-	/**The Category of the question*/
-	protected int Category;
+	/**The Category of the question.*/
+	private int category;
 	
-	/**The score of the question*/
-	protected int Score;
+	/**The score of the question.*/
+	private int score;
 	
-	/** Default constructor */
+	/** Default constructor.*/
 	public Question() {
-		this.Que = "What is my favorite movie?";
-		this.CorrectAns = "C"; //FIXME: Randomize this answer and therefore the order of answers.
-		this.UserAns = "Null";
-		this.AChoice = "Star Wars 4";
-		this.BChoice = "Star Wars 2";
-		this.CChoice = "Star Wars 7";
-		this.DChoice = "Star Wars 1";
-		this.Category = 1;
+		this.que = "What is my favorite movie?";
+		this.correctAns = "C"; 
+		this.userAns = "Null";
+		this.aChoice = "Star Wars 4";
+		this.bChoice = "Star Wars 2";
+		this.cChoice = "Star Wars 7";
+		this.dChoice = "Star Wars 1";
+		this.category = 1;
 
 	}
 	
-	/** Definable constructor*/
-	public Question(String question, String ansKey, String ansA, String ansB, String ansC, String ansD, int category, int score) {
-		this.Que = question;
-		this.CorrectAns = ansKey; //FIXME: Randomize this answer and therefore the order of answers.
-		this.UserAns = null;
-		this.AChoice = ansA;
-		this.BChoice = ansB;
-		this.CChoice = ansC;
-		this.DChoice = ansD;
-		this.Category = category;
-		this.Score = score;
+	/**
+	 * Constructor where field is parameter defined.
+	 * @param question Type: String. Holds question text.
+	 * @param ansKey Type: String. Holds correct answer option A,B,C,D 
+	 * @param ansA Type: String. A option text.
+	 * @param ansB Type: String. B option text.
+	 * @param ansC Type: String. C option text.
+	 * @param ansD Type: String. D option text.
+	 * @param category Type: String. Category of question can be a keyword.
+	 * @param score Type: int.
+	 */
+	public Question(final String question, 
+			        final String ansKey, 
+			        final String ansA, 
+			        final String ansB, 
+			        final String ansC, 
+			        final String ansD, 
+			        final int category, 
+			        final int score) {
+		this.que = question;
+		this.correctAns = ansKey; 
+		this.userAns = null;
+		this.aChoice = ansA;
+		this.bChoice = ansB;
+		this.cChoice = ansC;
+		this.dChoice = ansD;
+		this.category = category;
+		this.score = score;
 		
 
 	}
 
-	/**Returns Question */
+	/**Returns Question.
+	 * @return que Type: String. Returns question text. */
 	public String getQue() {
-		return Que;
+		return que;
 	}
 
-	public void setQue(String que) {
-		Que = que;
+	/**
+	 * Sets question text.
+	 * @param que Type String. Question text.
+	 */
+	public void setQue(final String que) {
+		this.que = que;
 	}
 	
-	/**Returns Question */
+	/**
+	 * Returns score of question.
+	 * @return score Type: int
+	 */
 	public int getScore() {
-		return Score;
+		return score;
 	}
 
-	public void setScore(int score) {
-		Score = score;
+	/**
+	 * Sets score of question.
+	 * @param score Type: int.
+	 */
+	public void setScore(final int score) {
+		this.score = score;
 	}
 	
-	/**Returns Correct Answer */
+	/**Returns Correct Answer. 
+	 * @return correctAns Type: String.
+	 */
 	public String getCorrectAns() {
-		return CorrectAns;
+		return correctAns;
 	}
 
-	public void setCorrectAns(String correctAns) {
-		CorrectAns = correctAns;
+	/**
+	 * Sets correct ans.
+	 * @param correctAns Type: String.
+	 */
+	public void setCorrectAns(final String correctAns) {
+		this.correctAns = correctAns;
 	}
 
-	/**Returns user answer*/
+	/**
+	 * Returns users guessed answer..
+	 * @return userAns TypeString.
+	 */
 	public String getUserAns() {
-		return UserAns;
+		return userAns;
 	}
 
-	public void setUserAns(String userAns) {
-		UserAns = userAns;
+	/**
+	 * Set users guessed answer.
+	 * @param userAns Type: String
+	 */
+	public void setUserAns(final String userAns) {
+		this.userAns = userAns;
 	}
 
+	/**
+	 * Returns text for the A choice.
+	 * @return aChoice Type: String.
+	 */
 	public String getAChoice() {
-		return AChoice;
+		return aChoice;
 	}
 
-	public void setAChoice(String aChoice) {
-		AChoice = aChoice;
+	/**
+	 * Sets text for the A choice.
+	 * @param aChoice Type: String.
+	 */
+	public void setAChoice(final String aChoice) {
+		this.aChoice = aChoice;
 	}
-
+	/**
+	 * Returns text for the B choice.
+	 * @return bChoice Type: String.
+	 */
 	public String getBChoice() {
-		return BChoice;
+		return bChoice;
 	}
 
-	public void setBChoice(String bChoice) {
-		BChoice = bChoice;
+	/**
+	 * Sets text for the B choice.
+	 * @param bChoice Type: String.
+	 */
+	public void setBChoice(final String bChoice) {
+		this.bChoice = bChoice;
 	}
-
+	/**
+	 * Returns text for the C choice.
+	 * @return cChoice Type: String.
+	 */
 	public String getCChoice() {
-		return CChoice;
+		return cChoice;
 	}
 
-	public void setCChoice(String cChoice) {
-		CChoice = cChoice;
+	/**
+	 * Sets text for the C choice.
+	 * @param cChoice Type: String.
+	 */
+	public void setCChoice(final String cChoice) {
+		this.cChoice = cChoice;
 	}
 
+	/**
+	 * Returns text for the D choice.
+	 * @return dChoice Type: String.
+	 */
 	public String getDChoice() {
-		return DChoice;
+		return dChoice;
 	}
 
-	public void setDChoice(String dChoice) {
-		DChoice = dChoice;
+	/**
+	 * Sets text for the D choice.
+	 * @param dChoice Type: String.
+	 */
+	public void setDChoice(final String dChoice) {
+		this.dChoice = dChoice;
 	}
 
+	/**
+	 * Returns category text. Could be a keyword or genre.
+	 * @return category Type: String.
+	 */
 	public int getCategory() {
-		return Category;
+		return category;
 	}
 
-	public void setCategory(int category) {
-		Category = category;
+	/**
+	 * Sets text for the category.
+	 * @param category Type: String.
+	 */
+	public void setCategory(final int category) {
+		this.category = category;
 	}
 	
-	/** checkAnswer - Returns true if user answer is the same as the correct answer else returns false.*/
-	
-	public boolean checkAnswer () {
+/**
+ * Returns true if the user answer is the same as the correct answer.
+ * False if otherwise.
+ * @return correct Type: boolean.
+ */
+	public boolean checkAnswer() {
 		boolean correct = false;
-		if (this.getUserAns() == (this.getCorrectAns())) 
+		if ((this.getUserAns()).equals(this.getCorrectAns())) {
 			correct = true;
-		
+		}
 		return correct;
 	}
 	
     @Override
+    /**
+     * Overridden toString method primarily for testing purposes.
+     */
     public String toString() {
-    	String str = ("Question: " + Que + "\nA:" + AChoice + "\nB: " + BChoice 
-    			+ "\nC: " + CChoice + "\nD: " + DChoice + "\nAnswer: " + CorrectAns + "\n\n");
+    	String str = ("Question: " + que + "\nA:" + aChoice + "\nB: " + bChoice 
+    					+ "\nC: " + cChoice + "\nD: " + dChoice 
+    					+ "\nAnswer: " + correctAns + "\n\n");
         return str;
     }
 	

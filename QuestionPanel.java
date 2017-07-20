@@ -1,58 +1,100 @@
+package edu.gvsu.cis350.triviaGame;
+
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.event.*;
-import javax.swing.*;
-import javax.swing.border.Border;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class QuestionPanel extends JFrame implements ActionListener, KeyListener {
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextArea;
 
+
+/**
+ * @author Zhen Lu
+ *
+ * Class creates the UI dialog that handles the answering
+ *  of the trivia questions.
+ */
+public class QuestionPanel extends JFrame implements
+                                          ActionListener, KeyListener {
+
+	/** Default Serial required for JFrame.*/
+	private static final long serialVersionUID = 1L;
+	/** JTextArea to hold question text.*/
 	private JTextArea question;
+	/**JLabel to display whose turn it is.*/
 	private JLabel playerterm;
+	/** int to hold whose turn it is.*/
 	private int player;
-	private int[] score;
-	private JPanel Qpanel;
-	private JPanel Wpanel;
-	private JPanel Cpanel;
-	private JPanel Bpanel;
+	/** Jpanel that holds the question.*/
+	private JPanel qpanel;
+	/**JPanel that holds whose turn it is. */
+	private JPanel wpanel;
+	/**JPanel that holds answer options.*/
+	private JPanel cpanel;
+	/**JPanel that holds submit button.*/
+	private JPanel bpanel;
+	/**Main JFrame that holds all panels.*/
 	private JFrame frame;
-	private JLabel timer;
+	/**RadioButton for A option.*/
 	private JRadioButton choiceA;
+	/**RadioButton for B option.*/
 	private JRadioButton choiceB;
+	/**Radiobutton for C option.*/
 	private JRadioButton choiceC;
+	/**Radiobutton for D option.*/
 	private JRadioButton choiceD;
+	/**Submit button.*/
 	private JButton submit;
+	/**Button group to hold radio buttons.*/
 	private ButtonGroup bG;
+	/**Int to hold the question set index.*/
 	private int index;
-	QGenerator q;
-	Countdown count;
-	Score s;
+	
+	/**QGenerator object that generates the question set.*/
+	private QGenerator q;
+	
+	/**Score object to handle change in player points.*/
+	private Score s;
 
-	public QuestionPanel(int index, Score ScoreBoard) {
-		JOptionPane.showMessageDialog(frame, "Player Buzzers\n\n  Player 1: Z\n  Player 2: M\n  Player 3: Q ");
+	/**
+	 * Constructor for objects of type QuestionPanel, 
+	 * that creates a frame and populates widgets.
+	 * @param index Type: int. Stores index of question selected.
+	 * @param scoreBoard Type: Score. Object created by TriviaGui to
+	 * obtain  player scores.
+	 */
+	public QuestionPanel(final int index, final Score scoreBoard) {
+		frame = new JFrame();
 		
-		s = ScoreBoard;
+		JOptionPane.showMessageDialog(frame, "Player Buzzers\n\n "
+				+ " Player 1: Z\n  Player 2: M\n  Player 3: Q ");
+		
+		s = scoreBoard;
 		
 		player = 0;
-		score = new int[3];
 		this.index = index;
 		q = new QGenerator();
 		q.createQSet();
-		frame = new JFrame();
-		Qpanel = new JPanel();
-		Cpanel = new JPanel();
-		Bpanel = new JPanel();
-		Wpanel = new JPanel();
+
+		qpanel = new JPanel();
+		cpanel = new JPanel();
+		bpanel = new JPanel();
+		wpanel = new JPanel();
 		bG = new ButtonGroup();
 		playerterm = new JLabel();
 
 		submit = new JButton("Submit");
 		submit.addActionListener(this);
-		Bpanel.add(submit);
+		bpanel.add(submit);
 
 		Font font1 = new Font("Tahoma", Font.CENTER_BASELINE, 18);
 		Font font2 = new Font("Tahoma", Font.CENTER_BASELINE, 28);
@@ -64,9 +106,8 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 		question.setWrapStyleWord(true);
 		question.setBackground(frame.getBackground());
 		question.setEditable(false);
-		timer = new JLabel();
 		playerterm.setFont(font1);
-		Wpanel.add(playerterm);
+		wpanel.add(playerterm);
 
 		choiceA = new JRadioButton(q.getQuestionAt(index).getAChoice());
 		choiceB = new JRadioButton(q.getQuestionAt(index).getBChoice());
@@ -86,16 +127,16 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 		bG.add(choiceC);
 		bG.add(choiceD);
 
-		Qpanel.add(question);
-		Cpanel.add(choiceA);
-		Cpanel.add(choiceB);
-		Cpanel.add(choiceC);
-		Cpanel.add(choiceD);
+		qpanel.add(question);
+		cpanel.add(choiceA);
+		cpanel.add(choiceB);
+		cpanel.add(choiceC);
+		cpanel.add(choiceD);
 
-		frame.add(Qpanel, BorderLayout.NORTH);
-		frame.add(Cpanel, BorderLayout.SOUTH);
-		frame.add(Wpanel, BorderLayout.WEST);
-		frame.add(Bpanel, BorderLayout.CENTER);
+		frame.add(qpanel, BorderLayout.NORTH);
+		frame.add(cpanel, BorderLayout.SOUTH);
+		frame.add(wpanel, BorderLayout.WEST);
+		frame.add(bpanel, BorderLayout.CENTER);
 
 		frame.pack();
 		frame.setSize(1000, 600);
@@ -109,11 +150,11 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 		frame.addKeyListener(this);
 		frame.setFocusable(true);
 		submit.setEnabled(false);
-		// frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(0);
 	}
 
 	@Override
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(final KeyEvent e) {
 		
 		if (e.getKeyCode() == KeyEvent.VK_Z) {
 			choiceA.setEnabled(true);
@@ -121,7 +162,7 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 			choiceC.setEnabled(true);
 			choiceD.setEnabled(true);
 			playerterm.setText("Player 1");
-			player =1;
+			player = 1;
 			
 		}
 		if (e.getKeyCode() == KeyEvent.VK_M) {
@@ -130,7 +171,7 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 			choiceC.setEnabled(true);
 			choiceD.setEnabled(true);
 			playerterm.setText("Player 2");
-			player =2;
+			player = 2;
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_Q) {
@@ -139,12 +180,12 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 			choiceC.setEnabled(true);
 			choiceD.setEnabled(true);
 			playerterm.setText("Player 3");
-			player =3 ;
+			player = 3;
 		}
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(final ActionEvent e) {
 		submit.setEnabled(true);
 		if (e.getSource() == submit) {
 			answer();
@@ -155,57 +196,54 @@ public class QuestionPanel extends JFrame implements ActionListener, KeyListener
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
+	public void keyReleased(final KeyEvent e) {
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
+	public void keyTyped(final KeyEvent e) {
 	}
 
-	/*public static void main(String[] args) {
-		QuestionPanel game = new QuestionPanel(5);
-	}*/
-	
+
+	/**
+	 * Method handles the radio buttons and correct or incorrect
+	 * answers.
+	 */
 	private void answer() {
-		if(choiceA.isSelected()){
+		if (choiceA.isSelected()) {
 			q.getQuestionAt(index).setUserAns("A");
-		}
-		else if(choiceB.isSelected()) {
+		} else if (choiceB.isSelected()) {
 			q.getQuestionAt(index).setUserAns("B");
-		}
-		else if(choiceC.isSelected()) {
+		} else if (choiceC.isSelected()) {
 			q.getQuestionAt(index).setUserAns("C");
-		}
-		else if(choiceD.isSelected()) {
+		} else if (choiceD.isSelected()) {
 			q.getQuestionAt(index).setUserAns("D");
 		}
 		
-		//System.out.println(""+q.getQuestionAt(index).getCorrectAns());
 		
-		if(q.getQuestionAt(index).checkAnswer()) {
+		if (q.getQuestionAt(index).checkAnswer()) {
 			//System.out.println("correct");
 			JOptionPane.showMessageDialog(frame, "Correct");
 
-			if(player == 1)
+			if (player == 1) {
 				// change: the score that worth of value
 				s.setplayer1(q.getQuestionAt(index).getScore());
-			else if(player ==2)
+			} else if (player == 2) {
 				s.setplayer2(q.getQuestionAt(index).getScore());
-			else if(player == 3)
+			} else if (player == 3) {
 				s.setplayer3(q.getQuestionAt(index).getScore());
-		}
-		else
-		{
+			}
+		} else {
 			JOptionPane.showMessageDialog(frame, "Incorrect");
 		// pass the score
 			
-			if(player == 1)
+			if (player == 1) {
 				// change: the score that worth of value
-				s.setplayer1(q.getQuestionAt(index).getScore()*-1);
-			else if(player ==2)
-				s.setplayer2(q.getQuestionAt(index).getScore()*-1);
-			else 
-				s.setplayer3(q.getQuestionAt(index).getScore()*-1);
+				s.setplayer1(q.getQuestionAt(index).getScore() * -1);
+			} else if (player == 2) {
+				s.setplayer2(q.getQuestionAt(index).getScore() * -1);
+			} else { 
+				s.setplayer3(q.getQuestionAt(index).getScore() * -1);
+			}
 		}
 		
 	}
