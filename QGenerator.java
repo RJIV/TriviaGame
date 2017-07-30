@@ -1,12 +1,19 @@
 package edu.gvsu.cis350.triviaGame;
 
 import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.ArrayList;
 import info.movito.themoviedbapi.TmdbApi;
+import info.movito.themoviedbapi.TmdbMovies;
 import info.movito.themoviedbapi.TmdbSearch;
+import info.movito.themoviedbapi.TmdbMovies.MovieMethod;
 import info.movito.themoviedbapi.model.MovieDb;
+import info.movito.themoviedbapi.model.Reviews;
 import info.movito.themoviedbapi.model.core.MovieResultsPage;
 import info.movito.themoviedbapi.model.core.SessionToken;
+import info.movito.themoviedbapi.model.people.PersonCast;
+
 import java.util.Random;
 
 /**
@@ -79,19 +86,15 @@ public class QGenerator {
 
 
 	/**
-	 * createQue - Uses Tmdb to generate a question 
-	 * of a certain type base on the given category.
-	 * @param category - Question's category often a keyword or genre
-	 *                   used for searching database.
+	 * createYearQue - Uses Tmdb to generate a question 
+	 * of type year based on the given keyWord.
+	 * @param keyWord - key word for searching
 	 * @param score - Score 100-400, usually dependent on difficulty.
 	 * @param qType - Question type, ie. guess the year, or Movie or Crew.
 	 * @return que - Returns generated question.
 	 */
-	public Question createQue(final String category, 
-			                  final String qType, 
-			                  final int score) {
-		TmdbSearch tmdbSearch = tmdbApi.getSearch();
-
+	public Question createYearQue(final String keyWord, final int score) {
+		
 		//Variables
 
 		String queText = "N/a";
@@ -101,30 +104,23 @@ public class QGenerator {
 		String cText = "0";
 		String dText = "0";
 		int year = 0;
+		int pgNum = 0;
+		String path;
 
 
-		if (qType.equals("year")) {
-
-			int pgNum = 0;
-
-
-			MovieResultsPage results = 
-					tmdbSearch.searchMovie(category, year, "en", false, pgNum);
+			MovieResultsPage results = searchViaTitle(pgNum, keyWord, year);
+			
 			Iterator<MovieDb> iterator = results.iterator();
 
 			String condition = null;
 			do {
 				if (!iterator.hasNext()) {
 					pgNum++;
-					results = 
-							tmdbSearch.searchMovie(category, 
-									               year, 
-									               "en", 
-									               false, 
-									               pgNum);
+					results = searchViaTitle(pgNum, keyWord, year);
 				}
 
 				MovieDb movie = iterator.next();
+				
 				condition = movie.getOverview();
 				
 				queText = ("This movie where: \n" 
@@ -132,6 +128,8 @@ public class QGenerator {
 				+ "\nwas/will be released?");
 				
 				ans = "A";
+				
+				path = movie.getPosterPath();
 				
 				aText = ("" 
 				+ (Integer.parseInt(movie.getReleaseDate().substring(0, 4))));
@@ -147,11 +145,153 @@ public class QGenerator {
 			
 			} while ((condition.equals(null)) && (iterator.hasNext()));
 
-		}
+			
 		Question que = new Question(queText, 
-				           ans, aText, bText, cText, dText, 1, score);
+				           ans, aText, bText, cText, dText, 1, score,path);
 		randomizer(que);
 		return que;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+	
+/**
+ * createCastQue - 
+ * @param keyWord
+ * @param score
+ * @return
+ */
+public Question createCastQue(final String keyWord, final int score) {
+	    TmdbMovies tmdbMovies = tmdbApi.getMovies();
+		//Variables
+		
+		String queText = "N/a";
+		String ans = "A";
+		String aText = "0";
+		String bText = "0";
+		String cText = "0";
+		String dText = "0";
+		int year = 0;
+		int pgNum = 0;
+		String path = null;;
+		
+		String cast1;
+		String cast2;
+		String cast3;
+		String cast4;
+		String cast5;
+		String cast6;
+		
+		int ID;
+		
+		List<PersonCast> castList;
+		
+		MovieResultsPage results = searchViaTitle(pgNum, keyWord, year);
+		
+		Iterator<MovieDb> iterator = results.iterator();
+
+		boolean castFound = false;
+		
+		do {
+			if (!iterator.hasNext()) {
+				pgNum++;
+				results = searchViaTitle(pgNum, keyWord, year);
+				iterator = results.iterator();
+			}
+			
+			MovieDb movie = iterator.next();
+			
+			ID = movie.getId();
+			MovieDb Movie = tmdbMovies.getMovie(ID, "en", MovieMethod.credits, MovieMethod.reviews, MovieMethod.videos);
+			
+			castList = Movie.getCast();
+			if(castList != null){
+				castFound = true;
+				
+				Iterator<PersonCast> castIterator = castList.iterator();
+				
+				PersonCast person1 = castIterator.next();
+				PersonCast person2 = castIterator.next();
+				PersonCast person3 = castIterator.next();
+				PersonCast person4 = castIterator.next();
+				PersonCast person5 = castIterator.next();
+				PersonCast person6 = castIterator.next();
+
+				cast1 = person1.getName();
+				cast2 = person2.getName();
+				cast3 = person3.getName();
+				cast4 = person4.getName();
+				cast5 = person5.getName();
+				cast6 = person6.getName();
+				
+				queText = ("This movie starred: \n" 
+						+ cast1 + ", "
+						+ cast2 + ",\n "
+						+ cast3 + ", "
+						+ cast4 + ",\n "
+					    + cast5 + ", and "
+					    + cast6 + "\n");
+						
+				ans = "A";
+				
+				path = movie.getPosterPath();
+				
+				aText = (movie.getTitle() + " " + movie.getReleaseDate());
+				
+				try {
+				movie = iterator.next();
+				} catch(NoSuchElementException ref) {
+					pgNum++;
+					results = searchViaTitle(pgNum, keyWord, year);
+					iterator = results.iterator();
+					movie = iterator.next();
+				} 
+
+				bText = (movie.getTitle() + " " + movie.getReleaseDate());
+				
+				try {
+				movie = iterator.next();
+				} catch(NoSuchElementException ref) {
+					pgNum++;
+					results = searchViaTitle(pgNum, keyWord, year);
+					iterator = results.iterator();
+					movie = iterator.next();
+				} 
+				
+				cText = (movie.getTitle() + " " + movie.getReleaseDate());
+			
+				try {
+				movie = iterator.next();
+				} catch(NoSuchElementException ref) {
+					pgNum++;
+					results = searchViaTitle(pgNum, keyWord, year);
+					iterator = results.iterator();
+					movie = iterator.next();
+				} 
+						
+				dText = (movie.getTitle() + " " + movie.getReleaseDate());
+			}
+		} while (!castFound);
+		Question que = new Question(queText, 
+		           ans, aText, bText, cText, dText, 1, score,path);
+        randomizer(que);
+return que;
+	}
+	/**
+	 * searchViaTitle - helper method that returns a page of movies
+	 * with the same keyword.
+	 * @param pgNum Type: int.
+	 * @param key Type: String.
+	 * @param year Type: Year.
+	 * @return results Type: MovieResultsPage. Page of movies for iteration.
+	 */
+	private MovieResultsPage searchViaTitle(
+				final int pgNum, final String key, final int year) {
+		 
+		TmdbSearch tmdbSearch = tmdbApi.getSearch();
+		MovieResultsPage results
+		= tmdbSearch.searchMovie(key, year, "en", false, pgNum);
+		
+		return results;
 	}
 
 	/**
@@ -161,30 +301,30 @@ public class QGenerator {
 	public void createQSet() {
 		QGenerator q = new QGenerator();
 
-		q.addQue(q.createQue("Iron Man", "year", 100));
-		q.addQue(q.createQue("Thor", "year", 200));
-		q.addQue(q.createQue("Spider Man", "year", 300));
-		q.addQue(q.createQue("Guardians of the Galaxy", "year", 400));
+		q.addQue(q.createYearQue("Iron Man", 100));
+		q.addQue(q.createCastQue("Thor", 200));
+		q.addQue(q.createCastQue("Spider Man", 300));
+		q.addQue(q.createYearQue("Guardians of the Galaxy", 400));
 
-		q.addQue(q.createQue("Cars", "year", 100));
-		q.addQue(q.createQue("Incredibles", "year", 200));
-		q.addQue(q.createQue("Bambi", "year", 300));
-		q.addQue(q.createQue("Toy Story", "year", 400));		
+		q.addQue(q.createCastQue("Cars", 100));
+		q.addQue(q.createYearQue("Incredibles", 200));
+		q.addQue(q.createYearQue("Bambi", 300));
+		q.addQue(q.createCastQue("Toy Story", 400));		
 
-		q.addQue(q.createQue("Worlds End", "year", 100));
-		q.addQue(q.createQue("Dead Man's Chest", "year", 200));
-		q.addQue(q.createQue("Curse of the Black Pearl", "year", 300));
-		q.addQue(q.createQue("Dead Men Tell No Tales", "year", 400));	
+		q.addQue(q.createYearQue("Pirates Worlds End", 100));
+		q.addQue(q.createCastQue("Dead Man's Chest", 200));
+		q.addQue(q.createYearQue("Curse of the Black Pearl", 300));
+		q.addQue(q.createCastQue("Dead Men Tell No Tales", 400));	
 
-		q.addQue(q.createQue("Star Wars New Hope", "year", 100));
-		q.addQue(q.createQue("Force Awakens", "year", 200));
-		q.addQue(q.createQue("Phantom Menace", "year", 300));
-		q.addQue(q.createQue("Last Jedi", "year", 400));
+		q.addQue(q.createCastQue("Star Wars New Hope", 100));
+		q.addQue(q.createYearQue("Force Awakens", 200));
+		q.addQue(q.createCastQue("Phantom Menace", 300));
+		q.addQue(q.createYearQue("Last Jedi", 400));
 
-		q.addQue(q.createQue("Princess Bride", "year", 100));
-		q.addQue(q.createQue("Hobbit", "year", 200));
-		q.addQue(q.createQue("Narnia", "year", 300));
-		q.addQue(q.createQue("Toy Story", "year", 400));			
+		q.addQue(q.createCastQue("Princess Bride", 100));
+		q.addQue(q.createYearQue("Hobbit", 200));
+		q.addQue(q.createCastQue("Narnia", 300));
+		q.addQue(q.createCastQue("Robin Hood", 400));			
 
 	}
 
@@ -204,7 +344,7 @@ public class QGenerator {
 		String dText = question.getDChoice();
 		String temp;
 		int i = 0;
-		while (i < 10) {
+		while (i < 20) {
 			int seed = rand.nextInt(4) + 1;
 			boolean moveAns = false;
 			boolean moveOtherAns = false;
@@ -408,6 +548,24 @@ public class QGenerator {
 		question.setDChoice(dText);
 
 			}
-	}
+	
+//	/**
+//	 * 
+//	 * @param args ignore this.
+//	 */
+//	public static void main(final String[] args) {
+//		QGenerator q = new QGenerator();
+//		q.createQSet();
+//		int i = 0;
+//		
+//		while (i< 20) {
+//			System.out.print(q.getQuestionAt(i).toString());
+//			
+//			i++;
+//		}
+//		
+//	}
+	
+}
 
 
