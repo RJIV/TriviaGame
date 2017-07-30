@@ -1,6 +1,8 @@
-package edu.gvsu.cis350.triviaGame;
+package project;
+
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,8 +15,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
+import javax.swing.Timer;
 
 
 /**
@@ -52,8 +56,8 @@ public class QuestionPanel extends JFrame implements
 	private JRadioButton choiceC;
 	/**Radiobutton for D option.*/
 	private JRadioButton choiceD;
-	/**Submit button.*/
-	private JButton submit;
+	/**Progress Bar.*/
+	private JProgressBar pBar;
 	/**Button group to hold radio buttons.*/
 	private ButtonGroup bG;
 	/**Int to hold the question set index.*/
@@ -64,7 +68,12 @@ public class QuestionPanel extends JFrame implements
 	
 	/**Score object to handle change in player points.*/
 	private Score s;
-
+	
+	static Timer time;
+	int count = 10;
+	int delay = count * 1000;
+	TriviaGui g;
+	
 	/**
 	 * Constructor for objects of type QuestionPanel, 
 	 * that creates a frame and populates widgets.
@@ -72,14 +81,14 @@ public class QuestionPanel extends JFrame implements
 	 * @param scoreBoard Type: Score. Object created by TriviaGui to
 	 * obtain  player scores.
 	 */
-	public QuestionPanel(final int index, final Score scoreBoard) {
+	public QuestionPanel(final int index, final Score scoreBoard,TriviaGui game) {
 		frame = new JFrame();
 		
 		JOptionPane.showMessageDialog(frame, "Player Buzzers\n\n "
 				+ " Player 1: Z\n  Player 2: M\n  Player 3: Q ");
 		
 		s = scoreBoard;
-		
+		g = game;
 		player = 0;
 		this.index = index;
 		q = new QGenerator();
@@ -92,9 +101,10 @@ public class QuestionPanel extends JFrame implements
 		bG = new ButtonGroup();
 		playerterm = new JLabel();
 
-		submit = new JButton("Submit");
-		submit.addActionListener(this);
-		bpanel.add(submit);
+		pBar = new JProgressBar();
+		pBar.setValue(100);
+		pBar.setPreferredSize(new Dimension(500,50));
+		bpanel.add(pBar,BorderLayout.CENTER);
 
 		Font font1 = new Font("Tahoma", Font.CENTER_BASELINE, 18);
 		Font font2 = new Font("Tahoma", Font.CENTER_BASELINE, 28);
@@ -107,8 +117,9 @@ public class QuestionPanel extends JFrame implements
 		question.setBackground(frame.getBackground());
 		question.setEditable(false);
 		playerterm.setFont(font1);
-		wpanel.add(playerterm);
-
+		//wpanel.add(playerterm);
+		bpanel.add(playerterm,BorderLayout.NORTH);
+		
 		choiceA = new JRadioButton(q.getQuestionAt(index).getAChoice());
 		choiceB = new JRadioButton(q.getQuestionAt(index).getBChoice());
 		choiceC = new JRadioButton(q.getQuestionAt(index).getCChoice());
@@ -149,7 +160,7 @@ public class QuestionPanel extends JFrame implements
 		choiceD.setEnabled(false);
 		frame.addKeyListener(this);
 		frame.setFocusable(true);
-		submit.setEnabled(false);
+		pBar.setStringPainted(false);;
 		frame.setDefaultCloseOperation(0);
 	}
 
@@ -157,41 +168,28 @@ public class QuestionPanel extends JFrame implements
 	public void keyPressed(final KeyEvent e) {
 		
 		if (e.getKeyCode() == KeyEvent.VK_Z) {
-			choiceA.setEnabled(true);
-			choiceB.setEnabled(true);
-			choiceC.setEnabled(true);
-			choiceD.setEnabled(true);
+			setup();
 			playerterm.setText("Player 1");
 			player = 1;
-			
+			countdown();			
 		}
 		if (e.getKeyCode() == KeyEvent.VK_M) {
-			choiceA.setEnabled(true);
-			choiceB.setEnabled(true);
-			choiceC.setEnabled(true);
-			choiceD.setEnabled(true);
+			setup();
 			playerterm.setText("Player 2");
 			player = 2;
+			countdown();
 		}
 
 		if (e.getKeyCode() == KeyEvent.VK_Q) {
-			choiceA.setEnabled(true);
-			choiceB.setEnabled(true);
-			choiceC.setEnabled(true);
-			choiceD.setEnabled(true);
+			setup();
 			playerterm.setText("Player 3");
 			player = 3;
+			countdown();
 		}
 	}
 
 	@Override
 	public void actionPerformed(final ActionEvent e) {
-		submit.setEnabled(true);
-		if (e.getSource() == submit) {
-			answer();
-			frame.setVisible(false);
-		}
-		
 
 	}
 
@@ -217,7 +215,8 @@ public class QuestionPanel extends JFrame implements
 			q.getQuestionAt(index).setUserAns("C");
 		} else if (choiceD.isSelected()) {
 			q.getQuestionAt(index).setUserAns("D");
-		}
+		} else
+			q.getQuestionAt(index).setUserAns("F");
 		
 		
 		if (q.getQuestionAt(index).checkAnswer()) {
@@ -237,15 +236,46 @@ public class QuestionPanel extends JFrame implements
 		// pass the score
 			
 			if (player == 1) {
-				// change: the score that worth of value
+				if(s.getplayer1()>0)
 				s.setplayer1(q.getQuestionAt(index).getScore() * -1);
 			} else if (player == 2) {
+				if(s.getplayer2()>0)
 				s.setplayer2(q.getQuestionAt(index).getScore() * -1);
 			} else { 
+				if(s.getplayer3()>0)
 				s.setplayer3(q.getQuestionAt(index).getScore() * -1);
 			}
 		}
 		
+		g.player1Score.setText("          " + s.getplayer1() + "   ");
+		g.player2Score.setText("          " + s.getplayer2() + "   ");
+		g.player3Score.setText("          " + s.getplayer3() + "   ");
+	}
+	
+	private void setup() {
+		choiceA.setEnabled(true);
+		choiceB.setEnabled(true);
+		choiceC.setEnabled(true);
+		choiceD.setEnabled(true);
+		frame.setFocusable(false);
+	}
+
+	private void countdown() {
+		time = new Timer(1000, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				count--;
+				pBar.setValue(count*10);
+				//System.out.println(count);
+				if (count <= 0) {
+					time.stop();
+					answer();
+					frame.setVisible(false);
+				}
+			}
+		});
+		time.setRepeats(true);
+		time.start();
 	}
 
 }

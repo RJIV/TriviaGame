@@ -1,4 +1,4 @@
-package edu.gvsu.cis350.triviaGame;
+package project;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -64,19 +64,21 @@ public class TriviaGui extends JFrame implements ActionListener {
 	private JLabel player3Label;
 	
 	/**JLabel displaying the score is for player 1. */
-	private JLabel player1Score;
+	protected JLabel player1Score;
 	
 	/**JLabel displaying the score is for player 2. */
-	private JLabel player2Score;
+	protected JLabel player2Score;
 	
 	/**JLabel displaying the score is for player 3. */
-	private JLabel player3Score;
+	protected JLabel player3Score;
 	
 	/**GridLayout - created to contain layout of gridPanel. */
 	private GridLayout layout;
 	
 	/**Score entity object created to hold player scores for this game.*/
-	private Score scoreBoard;
+	protected Score scoreBoard;
+	
+	static TriviaGui game;
 	
 	/**
 	 * Constructor creates Score object, and
@@ -160,15 +162,14 @@ public class TriviaGui extends JFrame implements ActionListener {
 		}
 		for (int row = 0; row < 4; row++) {
 			for (int col = 0; col < 5; col++) {
-				updateScore();
 				if (e.getSource() == gridButtons[row][col]) {
 					int index = 4 * col + row;
-					QuestionPanel q = new QuestionPanel(index, scoreBoard);	
+					QuestionPanel q = new QuestionPanel(index, scoreBoard,game);	
 					gridButtons[row][col].setEnabled(false);
 				}
 			}
 		}
-		updateScore();
+		
 	}
 	
 	/**
@@ -278,6 +279,6 @@ public class TriviaGui extends JFrame implements ActionListener {
 	 * @param args default parameter to main method.
 	 */
 	public static void main(final String[] args) {
-		TriviaGui game = new TriviaGui();
+		game = new TriviaGui();
 	}
 }

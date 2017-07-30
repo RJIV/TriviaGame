@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="triviaGuiPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="495.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="genre1" alignment="CENTER" layoutX="26.0" layoutY="19.0" prefHeight="70.0" prefWidth="110.0" text="Marvel" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="genre5" alignment="CENTER" layoutX="466.0" layoutY="19.0" prefHeight="70.0" prefWidth="110.0" text="Fantasy" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="genre4" alignment="CENTER" layoutX="356.0" layoutY="19.0" prefHeight="70.0" prefWidth="110.0" text="Star Wars" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="genre3" alignment="CENTER" layoutX="246.0" layoutY="19.0" prefHeight="70.0" prefWidth="110.0" text="Pirates" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="genre2" alignment="CENTER" layoutX="136.0" layoutY="19.0" prefHeight="70.0" prefWidth="110.0" text="Animation" wrapText="true">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="marvel100" blendMode="SRC_ATOP" layoutX="26.0" layoutY="89.0" mnemonicParsing="false" onAction="#openMarvelQuestion" prefHeight="70.0" prefWidth="110.0" text="100" />
+      <Button fx:id="marvel200" blendMode="SRC_ATOP" layoutX="26.0" layoutY="159.0" mnemonicParsing="false" onAction="#openQuestionPanel" prefHeight="70.0" prefWidth="110.0" text="200" />
+      <Button fx:id="marvel300" blendMode="SRC_ATOP" layoutX="26.0" layoutY="229.0" mnemonicParsing="false" onAction="#openQuestionPanel" prefHeight="70.0" prefWidth="110.0" text="300" />
+      <Button fx:id="marvel400" blendMode="SRC_ATOP" layoutX="26.0" layoutY="299.0" mnemonicParsing="false" onAction="#openMarvelQuestion" prefHeight="70.0" prefWidth="110.0" text="400" />
+      <Button fx:id="anime100" blendMode="SRC_ATOP" layoutX="136.0" layoutY="89.0" mnemonicParsing="false" onAction="#openAnimeQuestion" prefHeight="70.0" prefWidth="110.0" text="100" />
+      <Button fx:id="anime200" blendMode="SRC_ATOP" layoutX="136.0" layoutY="159.0" mnemonicParsing="false" onAction="#openQuestionPanel" prefHeight="70.0" prefWidth="110.0" text="200" />
+      <Button fx:id="anime300" blendMode="SRC_ATOP" layoutX="136.0" layoutY="229.0" mnemonicParsing="false" onAction="#openQuestionPanel" prefHeight="70.0" prefWidth="110.0" text="300" />
+      <Button fx:id="anime400" blendMode="SRC_ATOP" layoutX="136.0" layoutY="299.0" mnemonicParsing="false" onAction="#openAnimeQuestion" prefHeight="70.0" prefWidth="110.0" text="400" />
+      <Button fx:id="pirates100" blendMode="SRC_ATOP" layoutX="246.0" layoutY="89.0" mnemonicParsing="false" onAction="#openPiratesQuestion" prefHeight="70.0" prefWidth="110.0" text="100" />
+      <Button fx:id="pirates200" blendMode="SRC_ATOP" layoutX="246.0" layoutY="159.0" mnemonicParsing="false" onAction="#openQuestionPanel" prefHeight="70.0" prefWidth="110.0" text="200" />
+      <Button fx:id="pirates300" blendMode="SRC_ATOP" layoutX="246.0" layoutY="229.0" mnemonicParsing="false" onAction="#openQuestionPanel" prefHeight="70.0" prefWidth="110.0" text="300" />
+      <Button fx:id="pirates400" blendMode="SRC_ATOP" layoutX="246.0" layoutY="299.0" mnemonicParsing="false" onAction="#openPiratesQuestion" prefHeight="70.0" prefWidth="110.0" text="400" />
+      <Button fx:id="starwars100" blendMode="SRC_ATOP" layoutX="356.0" layoutY="89.0" mnemonicParsing="false" onAction="#openStarWarsQuestion" prefHeight="70.0" prefWidth="110.0" text="100" />
+      <Button fx:id="starwars200" blendMode="SRC_ATOP" layoutX="356.0" layoutY="159.0" mnemonicParsing="false" onAction="#openQuestionPanel" prefHeight="70.0" prefWidth="110.0" text="200" />
+      <Button fx:id="starwars300" blendMode="SRC_ATOP" layoutX="356.0" layoutY="229.0" mnemonicParsing="false" onAction="#openQuestionPanel" prefHeight="70.0" prefWidth="110.0" text="300" />
+      <Button fx:id="starwars400" blendMode="SRC_ATOP" layoutX="356.0" layoutY="299.0" mnemonicParsing="false" onAction="#openStarWarsQuestion" prefHeight="70.0" prefWidth="110.0" text="400" />
+      <Button fx:id="fantasy100" blendMode="SRC_ATOP" layoutX="466.0" layoutY="89.0" mnemonicParsing="false" onAction="#openFantasyQuestion" prefHeight="70.0" prefWidth="110.0" text="100" />
+      <Button fx:id="fantasy200" blendMode="SRC_ATOP" layoutX="466.0" layoutY="159.0" mnemonicParsing="false" onAction="#openQuestionPanel" prefHeight="70.0" prefWidth="110.0" text="200" />
+      <Button fx:id="fantasy300" blendMode="SRC_ATOP" layoutX="466.0" layoutY="229.0" mnemonicParsing="false" onAction="#openQuestionPanel" prefHeight="70.0" prefWidth="110.0" text="300" />
+      <Button fx:id="fantasy400" blendMode="SRC_ATOP" layoutX="466.0" layoutY="299.0" mnemonicParsing="false" onAction="#openFantasyQuestion" prefHeight="70.0" prefWidth="110.0" text="400" />
+      <Button fx:id="quitButton" layoutX="207.0" layoutY="448.0" mnemonicParsing="false" onAction="#quitAction" prefWidth="90.0" text="Quit" />
+      <Button fx:id="newGameButton" layoutX="306.0" layoutY="448.0" mnemonicParsing="false" onAction="#newGameAction" prefWidth="90.0" text="New Game" />
+      <Label fx:id="player2Label" alignment="CENTER" layoutX="236.0" layoutY="376.0" prefHeight="30.0" prefWidth="130.0" text="Player 2: " underline="true">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="player3Label" alignment="CENTER" layoutX="401.0" layoutY="376.0" prefHeight="30.0" prefWidth="130.0" text="Player 3: " underline="true">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="player1Label" alignment="CENTER" layoutX="71.0" layoutY="376.0" prefHeight="30.0" prefWidth="130.0" text="Player 1: " underline="true">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="playerOneScore" alignment="CENTER" layoutX="114.0" layoutY="406.0" prefHeight="30.0" prefWidth="45.0" text="0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="playerTwoScore" alignment="CENTER" layoutX="278.0" layoutY="406.0" prefHeight="30.0" prefWidth="45.0" text="0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="playerThreeScore" alignment="CENTER" layoutX="444.0" layoutY="406.0" prefHeight="30.0" prefWidth="45.0" text="0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>
