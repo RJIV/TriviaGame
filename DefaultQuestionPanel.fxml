@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<Pane fx:id="defaultQuestionPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DefaultQuestionPanelController">
+   <children>
+      <ImageView fx:id="moviePoster" fitHeight="255.0" fitWidth="227.0" layoutX="48.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true" />
+      <TextArea fx:id="question" editable="false" layoutX="289.0" layoutY="51.0" prefHeight="113.0" prefWidth="269.0" wrapText="true">
+         <font>
+            <Font size="18.0" />
+         </font></TextArea>
+      <ProgressBar fx:id="progressBar" layoutX="156.0" layoutY="333.0" prefHeight="29.0" prefWidth="289.0" progress="1.0" />
+      <RadioButton fx:id="choiceA" layoutX="323.0" layoutY="200.0" mnemonicParsing="false" onAction="#answerA" selected="true">
+         <toggleGroup>
+            <ToggleGroup fx:id="buttonGroup" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="choiceC" layoutX="323.0" layoutY="244.0" mnemonicParsing="false" onAction="#answerC" selected="true" toggleGroup="$buttonGroup" />
+      <RadioButton fx:id="choiceB" layoutX="467.0" layoutY="200.0" mnemonicParsing="false" onAction="#answerB" selected="true" toggleGroup="$buttonGroup" />
+      <RadioButton fx:id="choiceD" layoutX="467.0" layoutY="244.0" mnemonicParsing="false" onAction="#answerD" selected="true" toggleGroup="$buttonGroup" />
+   </children>
+</Pane>
