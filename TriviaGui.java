@@ -1,4 +1,4 @@
-package project;
+//package project;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -14,7 +14,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.border.Border;
+import java.awt.Dimension;
 
 
 /**
@@ -90,48 +93,58 @@ public class TriviaGui extends JFrame implements ActionListener {
 		
 		//Create JFrame object
 		startupFrame = new JFrame("Trivia Game");
+		startupFrame.setPreferredSize(new Dimension(900, 750));
+		startupFrame.setResizable(false);
 
 		gridPanel = gridPanel();
 		buttonPanel = buttonPanel();
 		scorePanel = new JPanel();
+		scorePanel.setPreferredSize(new Dimension(10, 700));
+		scorePanel.setBounds(107, 565, 684, 64);
 		Font font1 = new Font("Tahoma", Font.CENTER_BASELINE, 18);
 				
-		player1Label = new JLabel("   Player 1:   ");
+		player1Label = new JLabel("Player 1:");
+		player1Label.setHorizontalAlignment(SwingConstants.CENTER);
 		player1Score = 
-				new JLabel("          " + scoreBoard.getplayer1() + "   ");
-		player2Label = new JLabel("   Player 2:   ");
+				new JLabel("0");
+		player1Score.setHorizontalAlignment(SwingConstants.CENTER);
 		player2Score = 
-				new JLabel("          " + scoreBoard.getplayer2() + "   ");
-		player3Label = new JLabel("   Player 3:   ");
+				new JLabel("0");
+		player2Score.setHorizontalAlignment(SwingConstants.CENTER);
 		player3Score = 
-				new JLabel("          " + scoreBoard.getplayer3() + "   ");
+				new JLabel("0");
+		player3Score.setHorizontalAlignment(SwingConstants.CENTER);
 		//Set Label fonts
-		player1Label.setFont(font1);
+		player1Label.setFont(new Font("Tahoma", Font.BOLD, 18));
 		player1Score.setFont(font1);
-		player2Label.setFont(font1);
 		player2Score.setFont(font1);
-		player3Label.setFont(font1);
 		player3Score.setFont(font1);
-		scorePanel.setLayout(new GridLayout(6, 1));
+		scorePanel.setLayout(new GridLayout(2, 3));
 		
 		//Add score labels to scorePanel
 		scorePanel.add(player1Label);
-		scorePanel.add(player1Score);
+		player2Label = new JLabel("Player 2:");
+		player2Label.setHorizontalAlignment(SwingConstants.CENTER);
+		player2Label.setFont(font1);
 		scorePanel.add(player2Label);
-		scorePanel.add(player2Score);
+		player3Label = new JLabel("Player 3:");
+		player3Label.setHorizontalAlignment(SwingConstants.CENTER);
+		player3Label.setFont(font1);
 		scorePanel.add(player3Label);
+		scorePanel.add(player1Score);
+		scorePanel.add(player2Score);
 		scorePanel.add(player3Score);
+		startupFrame.getContentPane().setLayout(null);
 		
 		//Add panels to primary frame (startupFrame)
 		gridPanel.setLayout(layout);
-		startupFrame.add(gridPanel, BorderLayout.CENTER);
-		startupFrame.add(scorePanel, BorderLayout.LINE_END);
-		startupFrame.add(buttonPanel, BorderLayout.PAGE_END);
+		startupFrame.getContentPane().add(gridPanel);
+		startupFrame.getContentPane().add(scorePanel);
+		startupFrame.getContentPane().add(buttonPanel);
 		startupFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    startupFrame.pack();
 	    
 	    //Set size of frame
-	    startupFrame.setSize(1000, 600);
 	    startupFrame.setLocationRelativeTo(null);
 	    
 	    //Make UI visible
@@ -183,6 +196,7 @@ public class TriviaGui extends JFrame implements ActionListener {
 	public JPanel gridPanel() {
 		//Create panel
 		JPanel gridPanel = new JPanel();
+		gridPanel.setBounds(15, 16, 857, 533);
 		
 		//Set size of grid.
 		final int gridSize = 5;
@@ -242,6 +256,7 @@ public class TriviaGui extends JFrame implements ActionListener {
 	 */
 	public JPanel buttonPanel() {
 		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setBounds(0, 645, 900, 39);
 		quit = new JButton("Quit");
 		quit.addActionListener(this);
 		newGame = new JButton("New Game");
@@ -279,6 +294,20 @@ public class TriviaGui extends JFrame implements ActionListener {
 	 * @param args default parameter to main method.
 	 */
 	public static void main(final String[] args) {
+		try {
+		    for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+		        if ("Nimbus".equals(info.getName())) {
+		            UIManager.setLookAndFeel(info.getClassName());
+		            break;
+		        }
+		    }
+		} catch (Exception e) {
+		    // If Nimbus is not available, fall back to cross-platform
+		    try {
+		        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+		    } catch (Exception ex) {
+		    }
+		}
 		game = new TriviaGui();
 	}
 }

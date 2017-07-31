@@ -1,6 +1,3 @@
-package project;
-
-
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -19,6 +16,13 @@ import javax.swing.JProgressBar;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
+import java.awt.GridLayout;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.MatteBorder;
+import java.awt.Color;
+import javax.swing.SwingConstants;
+import java.awt.Component;
 
 
 /**
@@ -40,8 +44,6 @@ public class QuestionPanel extends JFrame implements
 	private int player;
 	/** Jpanel that holds the question.*/
 	private JPanel qpanel;
-	/**JPanel that holds whose turn it is. */
-	private JPanel wpanel;
 	/**JPanel that holds answer options.*/
 	private JPanel cpanel;
 	/**JPanel that holds submit button.*/
@@ -83,6 +85,7 @@ public class QuestionPanel extends JFrame implements
 	 */
 	public QuestionPanel(final int index, final Score scoreBoard,TriviaGui game) {
 		frame = new JFrame();
+		frame.setPreferredSize(new Dimension(800, 500));
 		
 		JOptionPane.showMessageDialog(frame, "Player Buzzers\n\n "
 				+ " Player 1: Z\n  Player 2: M\n  Player 3: Q ");
@@ -95,39 +98,43 @@ public class QuestionPanel extends JFrame implements
 		q.createQSet();
 
 		qpanel = new JPanel();
+		qpanel.setBounds(0, 0, 778, 213);
 		cpanel = new JPanel();
+		cpanel.setBounds(271, 214, 507, 97);
 		bpanel = new JPanel();
-		wpanel = new JPanel();
+		bpanel.setBounds(0, 352, 778, 60);
 		bG = new ButtonGroup();
-		playerterm = new JLabel();
 
 		pBar = new JProgressBar();
+		pBar.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		pBar.setValue(100);
-		pBar.setPreferredSize(new Dimension(500,50));
+		pBar.setPreferredSize(new Dimension(500, 30));
 		bpanel.add(pBar,BorderLayout.CENTER);
 
 		Font font1 = new Font("Tahoma", Font.CENTER_BASELINE, 18);
 		Font font2 = new Font("Tahoma", Font.CENTER_BASELINE, 28);
 
 		question = new JTextArea(10, 40);
-		question.setFont(font1);
+		question.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
+		question.setBounds(276, 19, 487, 194);
+		question.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		question.setText(q.getQuestionAt(index).getQue());
 		question.setLineWrap(true);
 		question.setWrapStyleWord(true);
-		question.setBackground(frame.getBackground());
 		question.setEditable(false);
-		playerterm.setFont(font1);
-		//wpanel.add(playerterm);
-		bpanel.add(playerterm,BorderLayout.NORTH);
 		
 		choiceA = new JRadioButton(q.getQuestionAt(index).getAChoice());
+		choiceA.setHorizontalAlignment(SwingConstants.CENTER);
 		choiceB = new JRadioButton(q.getQuestionAt(index).getBChoice());
+		choiceB.setHorizontalAlignment(SwingConstants.CENTER);
 		choiceC = new JRadioButton(q.getQuestionAt(index).getCChoice());
+		choiceC.setHorizontalAlignment(SwingConstants.CENTER);
 		choiceD = new JRadioButton(q.getQuestionAt(index).getDChoice());
-		choiceA.setFont(font2);
-		choiceB.setFont(font2);
-		choiceC.setFont(font2);
-		choiceD.setFont(font2);
+		choiceD.setHorizontalAlignment(SwingConstants.CENTER);
+		choiceA.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		choiceB.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		choiceC.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		choiceD.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		choiceA.addActionListener(this);
 		choiceB.addActionListener(this);
 		choiceC.addActionListener(this);
@@ -137,20 +144,26 @@ public class QuestionPanel extends JFrame implements
 		bG.add(choiceB);
 		bG.add(choiceC);
 		bG.add(choiceD);
+		qpanel.setLayout(null);
 
 		qpanel.add(question);
+		cpanel.setLayout(new GridLayout(2, 2, 0, 0));
 		cpanel.add(choiceA);
 		cpanel.add(choiceB);
 		cpanel.add(choiceC);
 		cpanel.add(choiceD);
+		frame.getContentPane().setLayout(null);
 
-		frame.add(qpanel, BorderLayout.NORTH);
-		frame.add(cpanel, BorderLayout.SOUTH);
-		frame.add(wpanel, BorderLayout.WEST);
-		frame.add(bpanel, BorderLayout.CENTER);
+		frame.getContentPane().add(qpanel);
+		
+		JLabel moviePoster = new JLabel("");
+		moviePoster.setBounds(15, 16, 221, 190);
+		qpanel.add(moviePoster);
+		frame.getContentPane().add(cpanel);
+		frame.getContentPane().add(bpanel);
 
 		frame.pack();
-		frame.setSize(1000, 600);
+		frame.setSize(800, 500);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
@@ -160,7 +173,11 @@ public class QuestionPanel extends JFrame implements
 		choiceD.setEnabled(false);
 		frame.addKeyListener(this);
 		frame.setFocusable(true);
-		pBar.setStringPainted(false);;
+		pBar.setStringPainted(false);
+		playerterm = new JLabel();
+		playerterm.setBounds(45, 241, 169, 48);
+		frame.getContentPane().add(playerterm);
+		playerterm.setFont(font1);;
 		frame.setDefaultCloseOperation(0);
 	}
 
@@ -277,5 +294,4 @@ public class QuestionPanel extends JFrame implements
 		time.setRepeats(true);
 		time.start();
 	}
-
 }
