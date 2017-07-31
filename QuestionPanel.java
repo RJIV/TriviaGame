@@ -1,3 +1,5 @@
+package test;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -75,7 +77,7 @@ public class QuestionPanel extends JFrame implements
 	int count = 10;
 	int delay = count * 1000;
 	TriviaGui g;
-	
+	int nplayer=0;
 	/**
 	 * Constructor for objects of type QuestionPanel, 
 	 * that creates a frame and populates widgets.
@@ -83,10 +85,18 @@ public class QuestionPanel extends JFrame implements
 	 * @param scoreBoard Type: Score. Object created by TriviaGui to
 	 * obtain  player scores.
 	 */
-	public QuestionPanel(final int index, final Score scoreBoard,TriviaGui game) {
+	public QuestionPanel(final int index, final Score scoreBoard,TriviaGui game,int nplayer) {
 		frame = new JFrame();
 		frame.setPreferredSize(new Dimension(800, 500));
 		
+		this.nplayer = nplayer;
+		if(nplayer==1)
+			JOptionPane.showMessageDialog(frame, "Player Buzzers\n\n "
+					+ " Player 1: Z\n");
+		else if(nplayer ==2)
+			JOptionPane.showMessageDialog(frame, "Player Buzzers\n\n "
+					+ " Player 1: Z\n  Player 2: M\n");
+		else
 		JOptionPane.showMessageDialog(frame, "Player Buzzers\n\n "
 				+ " Player 1: Z\n  Player 2: M\n  Player 3: Q ");
 		
@@ -184,24 +194,50 @@ public class QuestionPanel extends JFrame implements
 	@Override
 	public void keyPressed(final KeyEvent e) {
 		
-		if (e.getKeyCode() == KeyEvent.VK_Z) {
+
+		if (nplayer==1) {
+			if(e.getKeyCode() == KeyEvent.VK_Z){
 			setup();
 			playerterm.setText("Player 1");
 			player = 1;
 			countdown();			
+			}
 		}
-		if (e.getKeyCode() == KeyEvent.VK_M) {
+		if (nplayer==2) {
+			if(e.getKeyCode() == KeyEvent.VK_Z){
+				setup();
+				playerterm.setText("Player 1");
+				player = 1;
+				countdown();			
+				}
+			if(e.getKeyCode() == KeyEvent.VK_M){
 			setup();
 			playerterm.setText("Player 2");
 			player = 2;
 			countdown();
+			}
 		}
 
-		if (e.getKeyCode() == KeyEvent.VK_Q) {
+		if (nplayer==3)
+		{
+			if(e.getKeyCode() == KeyEvent.VK_Z){
+				setup();
+				playerterm.setText("Player 1");
+				player = 1;
+				countdown();			
+				}
+			if(e.getKeyCode() == KeyEvent.VK_M){
+			setup();
+			playerterm.setText("Player 2");
+			player = 2;
+			countdown();
+			}
+			if( e.getKeyCode() == KeyEvent.VK_Q){
 			setup();
 			playerterm.setText("Player 3");
 			player = 3;
 			countdown();
+			}
 		}
 	}
 
