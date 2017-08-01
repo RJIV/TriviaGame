@@ -173,6 +173,7 @@ public class QGenerator {
 		int year = 0;
 		int pgNum = 0;
 		String path;
+		MovieDb queMovie;
 
 			MovieResultsPage results = searchViaTitle(pgNum, keyWord, year);
 			
@@ -186,6 +187,7 @@ public class QGenerator {
 				}
 
 				MovieDb movie = iterator.next();
+				queMovie = movie;
 				
 				condition = movie.getOverview();
 				
@@ -215,6 +217,7 @@ public class QGenerator {
 		Question que = new Question(queText, 
 				           ans, aText, bText, cText, dText, 1, score,path);
 		randomizer(que);
+		generateStats(que,queMovie);
 		return que;
 	}
 
