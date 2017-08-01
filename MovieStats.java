@@ -1,5 +1,7 @@
 package edu.gvsu.cis350.triviaGame;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import info.movito.themoviedbapi.model.Video;
@@ -15,27 +17,27 @@ import info.movito.themoviedbapi.model.people.PersonCast;
 public class MovieStats {
 
 	/** Movie Title.*/
-	String movieTitle;
+	private String movieTitle;
 	
 	/** Movie Overview.*/
-	String movieOverview;
+	private String movieOverview;
 	
 	/** Movie filePath.*/
-	String moviePoster;
+	private String moviePoster;
 	
 	/**List of Videos.*/
-	List<Video> trailers;
+	private List<Video> trailers;
 	
 	/**Cast List.*/
-	List<PersonCast> cast;
+	private List<PersonCast> cast;
 	
 	/**Release Date*/
-	String releaseDate;
+	private String releaseDate;
 	
 	/**
 	 * Default constructor.
 	 */
-	MovieStats() {
+	public MovieStats() {
 		movieTitle = "not found";
 		movieOverview = "not found";
 		moviePoster = "not found";
@@ -76,8 +78,8 @@ public class MovieStats {
 		this.trailers = trailers;
 	}
 
-	public List<PersonCast> getCast() {
-		return cast;
+	public List<String> getCast() {
+		return formatCastStrings();
 	}
 
 	public void setCast(List<PersonCast> cast) {
@@ -90,6 +92,26 @@ public class MovieStats {
 
 	public void setReleaseDate(String releaseDate) {
 		this.releaseDate = releaseDate;
+	}
+	
+	private List<String> formatCastStrings() {
+		List<String> list = new ArrayList<String>();
+		PersonCast person = new PersonCast();
+		
+		Iterator<PersonCast> iterator = cast.iterator();
+		String str = "Cast \t\t\t\t\t Role";
+		list.add(str);
+		
+		while(iterator.hasNext()) {
+			person = iterator.next();
+			
+			str = person.getName() + " \t\t\t " + person.getCharacter();
+			
+			list.add(str);
+		}
+		
+		
+		return list;
 	}
 	
 	
