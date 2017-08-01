@@ -1,4 +1,4 @@
-package test;
+//package test;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -101,23 +100,7 @@ public class TriviaGui extends JFrame implements ActionListener {
 
 	private JTextField greeting;
 
-	private JButton begin;
-
-	private JButton cancel;
-
-	private JRadioButton solo;
-
-	private JRadioButton dual;
-
-	private JRadioButton multi;
-
 	private ButtonGroup bG;
-
-	private JPanel bpanel1;
-
-	private JPanel bpanel2;
-
-	private JPanel lpanel;
 
 	private int nplayer = 0;
 
@@ -360,22 +343,25 @@ public class TriviaGui extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(final ActionEvent e) {
+		int response = 0;
 		if (e.getSource() == quit) {
-//			// Prompt confirmation
-//			int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?");
-//			// If confirmed exit
-//			if (response == 0) {
+			// Prompt confirmation
+			response = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit?");
+			// If confirmed exit
+			if (response == 0) {
 				dispose();
 				System.exit(0);
+			}
 			
 		}
 
 		if (e.getSource() == newGame) {
-//			// Prompt confirmation
-//			int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to start a new game?");
-//			// If confirmed reload
-//			if (response == 0) {
+			// Prompt confirmation
+			response = JOptionPane.showConfirmDialog(null, "Are you sure you want to start a new game?");
+			// If confirmed reload
+			if (response == 0) {
 				reloadUI();
+			}
 			
 		}
 		for (int row = 0; row < 4; row++) {
@@ -387,7 +373,6 @@ public class TriviaGui extends JFrame implements ActionListener {
 				}
 			}
 		}
-
 	}
 
 	/**
@@ -475,9 +460,9 @@ public class TriviaGui extends JFrame implements ActionListener {
 	 * 
 	 */
 	public void updateScore() {
-		player1Score.setText("          " + scoreBoard.getplayer1() + "   ");
-		player2Score.setText("          " + scoreBoard.getplayer2() + "   ");
-		player3Score.setText("          " + scoreBoard.getplayer3() + "   ");
+		player1Score.setText("" + scoreBoard.getplayer1());
+		player2Score.setText("" + scoreBoard.getplayer2());
+		player3Score.setText("" + scoreBoard.getplayer3());
 	}
 
 	/**

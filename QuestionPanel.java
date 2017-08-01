@@ -1,4 +1,4 @@
-package test;
+//package test;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -9,7 +9,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,12 +18,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
 import java.awt.GridLayout;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import javax.swing.SwingConstants;
-import java.awt.Component;
+import java.awt.Cursor;
 
 
 /**
@@ -110,9 +107,9 @@ public class QuestionPanel extends JFrame implements
 		qpanel = new JPanel();
 		qpanel.setBounds(0, 0, 778, 213);
 		cpanel = new JPanel();
-		cpanel.setBounds(271, 214, 507, 97);
+		cpanel.setBounds(67, 221, 683, 97);
 		bpanel = new JPanel();
-		bpanel.setBounds(0, 352, 778, 60);
+		bpanel.setBounds(0, 368, 778, 60);
 		bG = new ButtonGroup();
 
 		pBar = new JProgressBar();
@@ -122,11 +119,15 @@ public class QuestionPanel extends JFrame implements
 		bpanel.add(pBar,BorderLayout.CENTER);
 
 		Font font1 = new Font("Tahoma", Font.CENTER_BASELINE, 18);
-		Font font2 = new Font("Tahoma", Font.CENTER_BASELINE, 28);
 
 		question = new JTextArea(10, 40);
+		question.setFocusTraversalKeysEnabled(false);
+		question.setFocusable(false);
+		question.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		question.setRequestFocusEnabled(false);
+		question.setVerifyInputWhenFocusTarget(false);
 		question.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
-		question.setBounds(276, 19, 487, 194);
+		question.setBounds(25, 16, 726, 194);
 		question.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		question.setText(q.getQuestionAt(index).getQue());
 		question.setLineWrap(true);
@@ -134,17 +135,17 @@ public class QuestionPanel extends JFrame implements
 		question.setEditable(false);
 		
 		choiceA = new JRadioButton(q.getQuestionAt(index).getAChoice());
-		choiceA.setHorizontalAlignment(SwingConstants.CENTER);
+		choiceA.setHorizontalAlignment(SwingConstants.LEFT);
 		choiceB = new JRadioButton(q.getQuestionAt(index).getBChoice());
-		choiceB.setHorizontalAlignment(SwingConstants.CENTER);
+		choiceB.setHorizontalAlignment(SwingConstants.LEFT);
 		choiceC = new JRadioButton(q.getQuestionAt(index).getCChoice());
-		choiceC.setHorizontalAlignment(SwingConstants.CENTER);
+		choiceC.setHorizontalAlignment(SwingConstants.LEFT);
 		choiceD = new JRadioButton(q.getQuestionAt(index).getDChoice());
-		choiceD.setHorizontalAlignment(SwingConstants.CENTER);
-		choiceA.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		choiceB.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		choiceC.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		choiceD.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		choiceD.setHorizontalAlignment(SwingConstants.LEFT);
+		choiceA.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		choiceB.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		choiceC.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		choiceD.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		choiceA.addActionListener(this);
 		choiceB.addActionListener(this);
 		choiceC.addActionListener(this);
@@ -165,10 +166,6 @@ public class QuestionPanel extends JFrame implements
 		frame.getContentPane().setLayout(null);
 
 		frame.getContentPane().add(qpanel);
-		
-		JLabel moviePoster = new JLabel("");
-		moviePoster.setBounds(15, 16, 221, 190);
-		qpanel.add(moviePoster);
 		frame.getContentPane().add(cpanel);
 		frame.getContentPane().add(bpanel);
 
@@ -185,9 +182,10 @@ public class QuestionPanel extends JFrame implements
 		frame.setFocusable(true);
 		pBar.setStringPainted(false);
 		playerterm = new JLabel();
-		playerterm.setBounds(45, 241, 169, 48);
+		playerterm.setHorizontalAlignment(SwingConstants.CENTER);
+		playerterm.setBounds(297, 316, 169, 48);
 		frame.getContentPane().add(playerterm);
-		playerterm.setFont(font1);;
+		playerterm.setFont(font1);
 		frame.setDefaultCloseOperation(0);
 	}
 
@@ -300,9 +298,9 @@ public class QuestionPanel extends JFrame implements
 			}
 		}
 		
-		g.player1Score.setText("          " + s.getplayer1() + "   ");
-		g.player2Score.setText("          " + s.getplayer2() + "   ");
-		g.player3Score.setText("          " + s.getplayer3() + "   ");
+		g.player1Score.setText("" + s.getplayer1());
+		g.player2Score.setText("" + s.getplayer2());
+		g.player3Score.setText("" + s.getplayer3());
 	}
 	
 	private void setup() {
