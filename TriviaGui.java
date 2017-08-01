@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 //package test;
-=======
-package project;
->>>>>>> 6fe12f74120f33237a713d99dcdaed7e409fb28b
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -222,7 +218,6 @@ public class TriviaGui extends JFrame implements ActionListener {
 		greeting.setBackground(Color.BLUE);
 		greeting.setBounds(10, 5, 414, 62);
 		greeting.setText("Welcome to Trivia Game");
-		greeting.setEditable(false);
 		lpanel.add(greeting);
 		greeting.setColumns(10);
 		startupFrame.getContentPane().setLayout(null);

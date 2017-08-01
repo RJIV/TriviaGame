@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 //package test;
-=======
-package project;
->>>>>>> 6fe12f74120f33237a713d99dcdaed7e409fb28b
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -11,18 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 
-import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
-<<<<<<< HEAD
-=======
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
->>>>>>> 6fe12f74120f33237a713d99dcdaed7e409fb28b
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -32,23 +18,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.Timer;
 import java.awt.GridLayout;
-<<<<<<< HEAD
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import java.awt.Cursor;
-=======
-import java.awt.Image;
-
-import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.MatteBorder;
-import java.awt.Color;
-import javax.swing.SwingConstants;
-import java.awt.Component;
-import java.awt.SystemColor;
-import javax.swing.UIManager;
->>>>>>> 6fe12f74120f33237a713d99dcdaed7e409fb28b
 
 
 /**
@@ -111,8 +84,7 @@ public class QuestionPanel extends JFrame implements
 	 */
 	public QuestionPanel(final int index, final Score scoreBoard,TriviaGui game,int nplayer) {
 		frame = new JFrame();
-		frame.setBackground(UIManager.getColor("TextArea.disabledBackground"));
-		frame.setPreferredSize(new Dimension(800, 600));
+		frame.setPreferredSize(new Dimension(800, 500));
 		
 		this.nplayer = nplayer;
 		if(nplayer==1)
@@ -131,21 +103,13 @@ public class QuestionPanel extends JFrame implements
 		this.index = index;
 		q = new QGenerator();
 		q.createQSet();
-		
+
 		qpanel = new JPanel();
-<<<<<<< HEAD
 		qpanel.setBounds(0, 0, 778, 213);
 		cpanel = new JPanel();
 		cpanel.setBounds(67, 221, 683, 97);
 		bpanel = new JPanel();
 		bpanel.setBounds(0, 368, 778, 60);
-=======
-		qpanel.setBackground(UIManager.getColor("TextArea.disabledBackground"));
-		qpanel.setBounds(0, 0, 778, 311);
-		bpanel = new JPanel();
-		bpanel.setBackground(UIManager.getColor("TextArea.disabledBackground"));
-		bpanel.setBounds(0, 352, 778, 60);
->>>>>>> 6fe12f74120f33237a713d99dcdaed7e409fb28b
 		bG = new ButtonGroup();
 
 		pBar = new JProgressBar();
@@ -157,7 +121,6 @@ public class QuestionPanel extends JFrame implements
 		Font font1 = new Font("Tahoma", Font.CENTER_BASELINE, 18);
 
 		question = new JTextArea(10, 40);
-<<<<<<< HEAD
 		question.setFocusTraversalKeysEnabled(false);
 		question.setFocusable(false);
 		question.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -165,18 +128,10 @@ public class QuestionPanel extends JFrame implements
 		question.setVerifyInputWhenFocusTarget(false);
 		question.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		question.setBounds(25, 16, 726, 194);
-=======
-		question.setForeground(Color.BLACK);
-		question.setLineWrap(true);
-		question.setEditable(false);
-		question.setBorder(null);
-		question.setBounds(308, 10, 470, 194);
->>>>>>> 6fe12f74120f33237a713d99dcdaed7e409fb28b
 		question.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		question.setText(q.getQuestionAt(index).getQue());
-		question.setBackground(UIManager.getColor("TextArea.disabledBackground"));
+		question.setLineWrap(true);
 		question.setWrapStyleWord(true);
-<<<<<<< HEAD
 		question.setEditable(false);
 		
 		choiceA = new JRadioButton(q.getQuestionAt(index).getAChoice());
@@ -200,93 +155,29 @@ public class QuestionPanel extends JFrame implements
 		bG.add(choiceB);
 		bG.add(choiceC);
 		bG.add(choiceD);
-=======
-		question.setFocusable(false);
->>>>>>> 6fe12f74120f33237a713d99dcdaed7e409fb28b
 		qpanel.setLayout(null);
 
 		qpanel.add(question);
+		cpanel.setLayout(new GridLayout(2, 2, 0, 0));
+		cpanel.add(choiceA);
+		cpanel.add(choiceB);
+		cpanel.add(choiceC);
+		cpanel.add(choiceD);
 		frame.getContentPane().setLayout(null);
-		cpanel = new JPanel();
-		cpanel.setBackground(UIManager.getColor("TextArea.disabledBackground"));
-		cpanel.setBounds(304, 214, 474, 97);
-		
-				
-				
-				choiceA = new JRadioButton(q.getQuestionAt(index).getAChoice());
-				choiceA.setHorizontalAlignment(SwingConstants.CENTER);
-				choiceB = new JRadioButton(q.getQuestionAt(index).getBChoice());
-				choiceB.setHorizontalAlignment(SwingConstants.CENTER);
-				choiceC = new JRadioButton(q.getQuestionAt(index).getCChoice());
-				choiceC.setHorizontalAlignment(SwingConstants.CENTER);
-				choiceD = new JRadioButton(q.getQuestionAt(index).getDChoice());
-				choiceD.setHorizontalAlignment(SwingConstants.CENTER);
-				choiceA.setFont(new Font("Tahoma", Font.PLAIN, 24));
-				choiceB.setFont(new Font("Tahoma", Font.PLAIN, 24));
-				choiceC.setFont(new Font("Tahoma", Font.PLAIN, 24));
-				choiceD.setFont(new Font("Tahoma", Font.PLAIN, 24));
-				choiceA.setOpaque(false);
-				choiceC.setOpaque(false);
-				choiceA.addActionListener(this);
-				choiceB.addActionListener(this);
-				choiceC.addActionListener(this);
-				choiceD.addActionListener(this);
-				
-						bG.add(choiceA);
-						bG.add(choiceB);
-						bG.add(choiceC);
-						bG.add(choiceD);
-						cpanel.setLayout(new GridLayout(2, 2, 0, 0));
-						cpanel.add(choiceA);
-						cpanel.add(choiceB);
-						cpanel.add(choiceC);
-						cpanel.add(choiceD);
-						
-						frame.getContentPane().add(cpanel);
-						
-								choiceA.setEnabled(false);
-								choiceB.setEnabled(false);
-								choiceC.setEnabled(false);
-								choiceD.setEnabled(false);
 
 		frame.getContentPane().add(qpanel);
-<<<<<<< HEAD
 		frame.getContentPane().add(cpanel);
-=======
-		
-		
-		JLabel moviePoster = new JLabel("");
-		URL img;
-		BufferedImage imag = null;
-		try {
-			img = new URL("http://image.tmdb.org/t/p/original/"+q.getQuestionAt(index).getMoviePoster());
-			imag = ImageIO.read(img);
-			Image scaled = imag.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
-			ImageIcon image = new ImageIcon(scaled);
-			moviePoster.setIcon(image);
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		//Image image=GenerateImage.toImage(true);  //this generates an image file
-		//ImageIcon icon = new ImageIcon(""+q.getQuestionAt(index).getMoviePoster()); 
-		System.out.println(q.getQuestionAt(index).getMoviePoster());
-		
-		moviePoster.setVisible(true);
-		
-		moviePoster.setBounds(0, 0, 300, 301);
-		qpanel.add(moviePoster);
->>>>>>> 6fe12f74120f33237a713d99dcdaed7e409fb28b
 		frame.getContentPane().add(bpanel);
 
 		frame.pack();
-		frame.setSize(800, 600);
+		frame.setSize(800, 500);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+
+		choiceA.setEnabled(false);
+		choiceB.setEnabled(false);
+		choiceC.setEnabled(false);
+		choiceD.setEnabled(false);
 		frame.addKeyListener(this);
 		frame.setFocusable(true);
 		pBar.setStringPainted(false);
