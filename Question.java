@@ -40,6 +40,9 @@ public class Question {
 	/**The score of the question.*/
 	private String posterPath;
 	
+	/**MovieStats object*/
+	public MovieStats stats;
+	
 	/** Default constructor.*/
 	public Question() {
 		this.que = "What is my favorite movie?";
@@ -86,6 +89,14 @@ public class Question {
 
 	}
 	
+	public MovieStats getStats() {
+		return stats;
+	}
+
+	public void setStats(MovieStats stats) {
+		this.stats = stats;
+	}
+
 	/**Returns posterPath.
 	 * @return posterPath Type: String. File path of movie poster image. */
 	public String getMoviePoster() {
