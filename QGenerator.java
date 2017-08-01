@@ -105,7 +105,6 @@ public class QGenerator {
 		String dText = "0";
 		int year = 0;
 		int pgNum = 0;
-		String path;
 		
 		MovieResultsPage results = searchViaTitle(pgNum, keyWord, year);
 		
@@ -128,8 +127,6 @@ public class QGenerator {
 			
 			ans = "A";
 			
-			path = movie.getPosterPath();
-			
 			aText = ("" 
 			+ (Integer.parseInt(movie.getReleaseDate().substring(0, 4))));
 			
@@ -146,7 +143,7 @@ public class QGenerator {
 
 		
 		Question que = new Question(queText, 
-		           ans, aText, bText, cText, dText, 1, score,path);
+		           ans, aText, bText, cText, dText, 1, score);
 		randomizer(que);
 		return que;
 	}
@@ -172,7 +169,6 @@ public class QGenerator {
 		String dText = "0";
 		int year = 0;
 		int pgNum = 0;
-		String path;
 		MovieDb queMovie;
 
 			MovieResultsPage results = searchViaTitle(pgNum, keyWord, year);
@@ -197,8 +193,6 @@ public class QGenerator {
 				
 				ans = "A";
 				
-				path = movie.getPosterPath();
-				
 				aText = ("" 
 				+ (Integer.parseInt(movie.getReleaseDate().substring(0, 4))));
 				
@@ -215,7 +209,7 @@ public class QGenerator {
 
 			
 		Question que = new Question(queText, 
-				           ans, aText, bText, cText, dText, 1, score,path);
+				           ans, aText, bText, cText, dText, 1, score);
 		randomizer(que);
 		generateStats(que,queMovie);
 		return que;
@@ -242,7 +236,6 @@ public Question createCastQue(final String keyWord, final int score) {
 		String dText = "0";
 		int year = 0;
 		int pgNum = 0;
-		String path = null;;
 		
 		String cast1;
 		String cast2;
@@ -346,7 +339,7 @@ public Question createCastQue(final String keyWord, final int score) {
 			}
 		} while (!castFound);
 		Question que = new Question(queText, 
-		           ans, aText, bText, cText, dText, 1, score,path);
+		           ans, aText, bText, cText, dText, 1, score);
         randomizer(que);
         generateStats(que,queMovie);
 return que;
@@ -631,6 +624,7 @@ return que;
 	 */
 	private static void generateStats(final Question q, final MovieDb m) {
 		MovieStats stats = new MovieStats();
+		stats.setMoviePoster(m.getPosterPath());
 		stats.setMovieTitle(m.getTitle());
 		stats.setMovieOverview(m.getOverview());
 		stats.setCast(m.getCast());
