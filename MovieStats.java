@@ -1,5 +1,6 @@
 package edu.gvsu.cis350.triviaGame;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -78,7 +79,7 @@ public class MovieStats {
 		this.trailers = trailers;
 	}
 
-	public List<String> getCast() {
+	public String[][] getCast() {
 		return formatCastStrings();
 	}
 
@@ -94,24 +95,22 @@ public class MovieStats {
 		this.releaseDate = releaseDate;
 	}
 	
-	private List<String> formatCastStrings() {
-		List<String> list = new ArrayList<String>();
-		PersonCast person = new PersonCast();
-		
+	private String[][] formatCastStrings() {
+		PersonCast person;
 		Iterator<PersonCast> iterator = cast.iterator();
-		String str = "Cast \t\t\t\t\t Role";
-		list.add(str);
+		int size = cast.size();
 		
+		String[][] castArray = new String[size][size];
+		int i = 0;
 		while(iterator.hasNext()) {
 			person = iterator.next();
-			
-			str = person.getName() + " \t\t\t " + person.getCharacter();
-			
-			list.add(str);
+			castArray[i][0] = person.getName();
+			castArray[i][1] = person.getCharacter();
+			i++;			
 		}
 		
 		
-		return list;
+		return castArray;
 	}
 	
 	
