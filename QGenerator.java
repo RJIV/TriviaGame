@@ -1,4 +1,4 @@
-package project;
+package edu.gvsu.cis350.triviaGame;
 
 import java.util.Iterator;
 import java.util.List;
@@ -367,8 +367,7 @@ return que;
 	 * createQSet method creates 20 questions and adds them to the qlist
 	 * ArrayList.
 	 */
-	public void createQSet() {
-		QGenerator q = new QGenerator();
+	public void createQSet(QGenerator q) {
 
 		q.addQue(q.createYearQue("Iron Man", 100));
 		q.addQue(q.createCastQue("Thor", 200));

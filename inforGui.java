@@ -1,4 +1,4 @@
-//package project;
+package edu.gvsu.cis350.triviaGame;
 
 import java.awt.EventQueue;
 import java.awt.Image;

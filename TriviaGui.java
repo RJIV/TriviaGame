@@ -1,4 +1,4 @@
-//package project;
+package edu.gvsu.cis350.triviaGame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -93,6 +93,9 @@ public class TriviaGui extends JFrame implements ActionListener {
 
 	/** Score entity object created to hold player scores for this game. */
 	protected Score scoreBoard;
+	
+	/**QGenerator object that generates the question set.*/
+	private QGenerator qGen;
 
 	static TriviaGui game;
 
@@ -114,6 +117,9 @@ public class TriviaGui extends JFrame implements ActionListener {
 	public TriviaGui() {
 		//Create score object
 		scoreBoard = new Score();
+		
+		qGen = new QGenerator();
+		qGen.createQSet(qGen);
 		
 		//Create JFrame object
 		startupFrame = new JFrame("Trivia Game");
@@ -379,7 +385,7 @@ public class TriviaGui extends JFrame implements ActionListener {
 			for (int col = 0; col < 5; col++) {
 				if (e.getSource() == gridButtons[row][col]) {
 					int index = 4 * col + row;
-					QuestionPanel q = new QuestionPanel(index, scoreBoard, game, nplayer);
+					QuestionPanel q = new QuestionPanel(index, scoreBoard, game, nplayer,qGen);
 					gridButtons[row][col].setEnabled(false);
 				}
 			}

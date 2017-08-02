@@ -1,4 +1,4 @@
-package project;
+package edu.gvsu.cis350.triviaGame;
 
 
 /**

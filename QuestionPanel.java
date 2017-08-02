@@ -1,4 +1,4 @@
-//package project;
+package edu.gvsu.cis350.triviaGame;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -65,7 +65,7 @@ public class QuestionPanel extends JFrame implements
 	private int index;
 	
 	/**QGenerator object that generates the question set.*/
-	private QGenerator q;
+	private QGenerator qGen;
 	
 	/**Score object to handle change in player points.*/
 	private Score s;
@@ -85,19 +85,19 @@ public class QuestionPanel extends JFrame implements
 	 * @param scoreBoard Type: Score. Object created by TriviaGui to
 	 * obtain  player scores.
 	 */
-	public QuestionPanel(final int index, final Score scoreBoard,TriviaGui game,int nplayer) {
+	public QuestionPanel(final int index, final Score scoreBoard,TriviaGui game,int nplayer, QGenerator QGen) {
 		frame = new JFrame();
 		frame.setPreferredSize(new Dimension(800, 600));
 		
 		this.nplayer = nplayer;
-		
+		this.qGen = QGen;
 		
 		s = scoreBoard;
 		g = game;
 		player = 0;
 		this.index = index;
-		q = new QGenerator();
-		q.createQSet();
+		//q = new QGenerator();
+		//q.createQSet();
 
 		qpanel = new JPanel();
 		qpanel.setBounds(0, 0, 778, 213);
@@ -124,18 +124,18 @@ public class QuestionPanel extends JFrame implements
 		question.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		question.setBounds(28, 16, 722, 194);
 		question.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		question.setText(q.getQuestionAt(index).getQue());
+		question.setText(qGen.getQuestionAt(index).getQue());
 		question.setLineWrap(true);
 		question.setWrapStyleWord(true);
 		question.setEditable(false);
 		
-		choiceA = new JRadioButton(q.getQuestionAt(index).getAChoice());
+		choiceA = new JRadioButton(qGen.getQuestionAt(index).getAChoice());
 		choiceA.setHorizontalAlignment(SwingConstants.LEFT);
-		choiceB = new JRadioButton(q.getQuestionAt(index).getBChoice());
+		choiceB = new JRadioButton(qGen.getQuestionAt(index).getBChoice());
 		choiceB.setHorizontalAlignment(SwingConstants.LEFT);
-		choiceC = new JRadioButton(q.getQuestionAt(index).getCChoice());
+		choiceC = new JRadioButton(qGen.getQuestionAt(index).getCChoice());
 		choiceC.setHorizontalAlignment(SwingConstants.LEFT);
-		choiceD = new JRadioButton(q.getQuestionAt(index).getDChoice());
+		choiceD = new JRadioButton(qGen.getQuestionAt(index).getDChoice());
 		choiceD.setHorizontalAlignment(SwingConstants.LEFT);
 		choiceA.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		choiceB.setFont(new Font("Tahoma", Font.PLAIN, 18));
@@ -249,28 +249,28 @@ public class QuestionPanel extends JFrame implements
 	 */
 	private void answer() {
 		if (choiceA.isSelected()) {
-			q.getQuestionAt(index).setUserAns("A");
+			qGen.getQuestionAt(index).setUserAns("A");
 		} else if (choiceB.isSelected()) {
-			q.getQuestionAt(index).setUserAns("B");
+			qGen.getQuestionAt(index).setUserAns("B");
 		} else if (choiceC.isSelected()) {
-			q.getQuestionAt(index).setUserAns("C");
+			qGen.getQuestionAt(index).setUserAns("C");
 		} else if (choiceD.isSelected()) {
-			q.getQuestionAt(index).setUserAns("D");
+			qGen.getQuestionAt(index).setUserAns("D");
 		} else
-			q.getQuestionAt(index).setUserAns("F");
+			qGen.getQuestionAt(index).setUserAns("F");
 		
 		
-		if (q.getQuestionAt(index).checkAnswer()) {
+		if (qGen.getQuestionAt(index).checkAnswer()) {
 			//System.out.println("correct");
 			JOptionPane.showMessageDialog(frame, "Correct");
 
 			if (player == 1) {
 				// change: the score that worth of value
-				s.setplayer1(q.getQuestionAt(index).getScore());
+				s.setplayer1(qGen.getQuestionAt(index).getScore());
 			} else if (player == 2) {
-				s.setplayer2(q.getQuestionAt(index).getScore());
+				s.setplayer2(qGen.getQuestionAt(index).getScore());
 			} else if (player == 3) {
-				s.setplayer3(q.getQuestionAt(index).getScore());
+				s.setplayer3(qGen.getQuestionAt(index).getScore());
 			}
 		} else {
 			JOptionPane.showMessageDialog(frame, "Incorrect");
@@ -278,13 +278,13 @@ public class QuestionPanel extends JFrame implements
 			
 			if (player == 1) {
 				if(s.getplayer1()>0)
-				s.setplayer1(q.getQuestionAt(index).getScore() * -1);
+				s.setplayer1(qGen.getQuestionAt(index).getScore() * -1);
 			} else if (player == 2) {
 				if(s.getplayer2()>0)
-				s.setplayer2(q.getQuestionAt(index).getScore() * -1);
+				s.setplayer2(qGen.getQuestionAt(index).getScore() * -1);
 			} else { 
 				if(s.getplayer3()>0)
-				s.setplayer3(q.getQuestionAt(index).getScore() * -1);
+				s.setplayer3(qGen.getQuestionAt(index).getScore() * -1);
 			}
 		}
 		
@@ -292,7 +292,7 @@ public class QuestionPanel extends JFrame implements
 		g.player2Score.setText("" + s.getplayer2());
 		g.player3Score.setText("" + s.getplayer3());
 		
-		infor = new inforGui(q.getQuestionAt(index).getStats());
+		infor = new inforGui(qGen.getQuestionAt(index).getStats());
 	}
 	
 	private void setup() {

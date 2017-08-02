@@ -1,4 +1,4 @@
-package project;
+package edu.gvsu.cis350.triviaGame;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
