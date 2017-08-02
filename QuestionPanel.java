@@ -70,6 +70,8 @@ public class QuestionPanel extends JFrame implements
 	/**Score object to handle change in player points.*/
 	private Score s;
 	
+	InstructionWindow window;
+	
 	static Timer time;
 	int count = 10;
 	int delay = count * 1000;
@@ -88,14 +90,11 @@ public class QuestionPanel extends JFrame implements
 		
 		this.nplayer = nplayer;
 		if(nplayer==1)
-			JOptionPane.showMessageDialog(frame, "Player Buzzers\n\n "
-					+ " Player 1: Z\n");
+			window = new InstructionWindow(1);
 		else if(nplayer ==2)
-			JOptionPane.showMessageDialog(frame, "Player Buzzers\n\n "
-					+ " Player 1: Z\n  Player 2: M\n");
+			window = new InstructionWindow(2);
 		else
-		JOptionPane.showMessageDialog(frame, "Player Buzzers\n\n "
-				+ " Player 1: Z\n  Player 2: M\n  Player 3: Q ");
+			window = new InstructionWindow(3);
 		
 		s = scoreBoard;
 		g = game;
