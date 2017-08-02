@@ -80,7 +80,7 @@ public class MovieStats {
 	}
 
 	public String[][] getCast() {
-		return formatCastStrings();
+		return formatCastStrings(this.cast);
 	}
 
 	public void setCast(List<PersonCast> cast) {
@@ -95,7 +95,7 @@ public class MovieStats {
 		this.releaseDate = releaseDate;
 	}
 	
-	private String[][] formatCastStrings() {
+	private String[][] formatCastStrings(List<PersonCast> cast) {
 		PersonCast person;
 		Iterator<PersonCast> iterator = cast.iterator();
 		int size = cast.size();
