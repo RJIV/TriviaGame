@@ -1,3 +1,5 @@
+package project;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -6,10 +8,12 @@ import javax.swing.JPanel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Dimension;
 import java.awt.Component;
 
-public class InstructionWindow extends JFrame{
+public class InstructionWindow extends JFrame implements ActionListener{
 	private int nPlayers;
 	private JButton confirm;
 	private JPanel pane;
@@ -24,6 +28,7 @@ public class InstructionWindow extends JFrame{
 		confirm = new JButton();
 		confirm.setText("Ok");
 		confirm.setBounds(161, 293, 105, 29);
+		confirm.addActionListener(this);
 		pane.add(confirm);
 		
 		header = new JLabel("Use these keys to buzz in:");
@@ -92,5 +97,13 @@ public class InstructionWindow extends JFrame{
 		frame.getContentPane().add(pane);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		if(e.getSource() ==confirm){
+			frame.setVisible(false);
+		}
 	}
 }

@@ -1,4 +1,4 @@
-package edu.gvsu.cis350.triviaGame;
+package project;
 
 import java.util.Iterator;
 import java.util.List;

@@ -1,4 +1,4 @@
-//package test;
+package project;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -70,13 +70,14 @@ public class QuestionPanel extends JFrame implements
 	/**Score object to handle change in player points.*/
 	private Score s;
 	
-	InstructionWindow window;
+	
 	
 	static Timer time;
 	int count = 10;
 	int delay = count * 1000;
 	TriviaGui g;
 	int nplayer=0;
+	private project.inforGui infor;
 	/**
 	 * Constructor for objects of type QuestionPanel, 
 	 * that creates a frame and populates widgets.
@@ -89,12 +90,7 @@ public class QuestionPanel extends JFrame implements
 		frame.setPreferredSize(new Dimension(800, 500));
 		
 		this.nplayer = nplayer;
-		if(nplayer==1)
-			window = new InstructionWindow(1);
-		else if(nplayer ==2)
-			window = new InstructionWindow(2);
-		else
-			window = new InstructionWindow(3);
+		
 		
 		s = scoreBoard;
 		g = game;
@@ -186,6 +182,7 @@ public class QuestionPanel extends JFrame implements
 		frame.getContentPane().add(playerterm);
 		playerterm.setFont(font1);
 		frame.setDefaultCloseOperation(0);
+		countdown();	
 	}
 
 	@Override
@@ -197,7 +194,7 @@ public class QuestionPanel extends JFrame implements
 			setup();
 			playerterm.setText("Player 1");
 			player = 1;
-			countdown();			
+			//countdown();			
 			}
 		}
 		if (nplayer==2) {
@@ -205,13 +202,13 @@ public class QuestionPanel extends JFrame implements
 				setup();
 				playerterm.setText("Player 1");
 				player = 1;
-				countdown();			
+				//countdown();			
 				}
 			if(e.getKeyCode() == KeyEvent.VK_M){
 			setup();
 			playerterm.setText("Player 2");
 			player = 2;
-			countdown();
+			//countdown();
 			}
 		}
 
@@ -221,19 +218,19 @@ public class QuestionPanel extends JFrame implements
 				setup();
 				playerterm.setText("Player 1");
 				player = 1;
-				countdown();			
+				//countdown();			
 				}
 			if(e.getKeyCode() == KeyEvent.VK_M){
 			setup();
 			playerterm.setText("Player 2");
 			player = 2;
-			countdown();
+			//countdown();
 			}
 			if( e.getKeyCode() == KeyEvent.VK_Q){
 			setup();
 			playerterm.setText("Player 3");
 			player = 3;
-			countdown();
+			//countdown();
 			}
 		}
 	}
@@ -300,6 +297,8 @@ public class QuestionPanel extends JFrame implements
 		g.player1Score.setText("" + s.getplayer1());
 		g.player2Score.setText("" + s.getplayer2());
 		g.player3Score.setText("" + s.getplayer3());
+		
+		infor = new inforGui(q.getQuestionAt(index).getStats());
 	}
 	
 	private void setup() {
@@ -317,7 +316,7 @@ public class QuestionPanel extends JFrame implements
 				count--;
 				pBar.setValue(count*10);
 				//System.out.println(count);
-				if (count <= 0) {
+				if (count == 0) {
 					time.stop();
 					answer();
 					frame.setVisible(false);

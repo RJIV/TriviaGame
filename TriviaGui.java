@@ -1,4 +1,4 @@
-//package test;
+package project;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -106,6 +106,7 @@ public class TriviaGui extends JFrame implements ActionListener {
 
 	private JMenuItem Back;
 
+	InstructionWindow window;
 	/**
 	 * Constructor creates Score object, and
 	 * generates the user interface and adds action listeners to widgets.
@@ -156,6 +157,7 @@ public class TriviaGui extends JFrame implements ActionListener {
 
 		
 		welcomeframe = new JFrame();
+		welcomeframe.setAlwaysOnTop(true);
 		welcomeframe.setBounds(100, 100, 450, 300);
 		welcomeframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		bG = new ButtonGroup();
@@ -301,16 +303,19 @@ public class TriviaGui extends JFrame implements ActionListener {
 					// Add score labels to scorePanel
 					switch (nplayer) {
 					case 1:
+						scorePanel.removeAll();
 						scorePanel.add(player1Label);
 						scorePanel.add(player1Score);
 						break;
 					case 2:
+						scorePanel.removeAll();
 						scorePanel.add(player1Label);
 						scorePanel.add(player2Label);
 						scorePanel.add(player1Score);
 						scorePanel.add(player2Score);
 						break;
 					case 3:
+						scorePanel.removeAll();
 						scorePanel.add(player1Label);
 						scorePanel.add(player2Label);
 						scorePanel.add(player3Label);
@@ -334,11 +339,17 @@ public class TriviaGui extends JFrame implements ActionListener {
 			    //Make UI visible
 				startupFrame.setVisible(true);
 				welcomeframe.setVisible(false);
+				if(nplayer==1)
+					window = new InstructionWindow(1);
+				else if(nplayer ==2)
+					window = new InstructionWindow(2);
+				else
+					window = new InstructionWindow(3);
 			}
 			}
 		});
 		
-	
+		
 	}
 
 	@Override
