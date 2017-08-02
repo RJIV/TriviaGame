@@ -101,13 +101,13 @@ public class MovieStats {
 	
 	private String[][] formatCastStrings(List<PersonCast> cast) {
 		PersonCast person;
-		Iterator<PersonCast> iterator = getCast().iterator();
-		int size = cast.size();
+		ArrayList<PersonCast> castList = new ArrayList<PersonCast>(getCast());
+		int size = castList.size();
 		
 		String[][] castArray = new String[size][size];
 		int i = 0;
-		while(iterator.hasNext()) {
-			person = iterator.next();
+		while(i<size) {
+			person = castList.get(i);
 			castArray[i][0] = person.getName();
 			castArray[i][1] = person.getCharacter();
 			i++;			
