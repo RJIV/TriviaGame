@@ -100,20 +100,20 @@ public class MovieStats {
 	}
 	
 	private String[][] formatCastStrings(List<PersonCast> cast) {
-		PersonCast person;
-		ArrayList<PersonCast> castList = new ArrayList<PersonCast>(getCast());
-		int size = castList.size();
-		
-		String[][] castArray = new String[size][size];
-		int i = 0;
-		while(i<size) {
-			person = castList.get(i);
-			castArray[i][0] = person.getName();
-			castArray[i][1] = person.getCharacter();
-			i++;			
-		}
 		
 		
+			PersonCast person;
+			ArrayList<PersonCast> castList = new ArrayList<PersonCast>(getCast());
+			int size = castList.size();
+			
+			String[][] castArray = new String[size][size];
+			int i = 0;
+			while(i<size) {
+				person = castList.get(i);
+				castArray[i][0] = person.getName();
+				castArray[i][1] = person.getCharacter();
+				i++;
+			}
 		return castArray;
 	}
 	

@@ -158,7 +158,6 @@ public class QGenerator {
 	 * @return que - Returns generated question.
 	 */
 	public Question createYearQue(final String keyWord, final int score) {
-		
 		//Variables
 
 		String queText = "N/a";
@@ -170,7 +169,7 @@ public class QGenerator {
 		int year = 0;
 		int pgNum = 0;
 		MovieDb queMovie;
-
+		int ID;
 			MovieResultsPage results = searchViaTitle(pgNum, keyWord, year);
 			
 			Iterator<MovieDb> iterator = results.iterator();
@@ -181,9 +180,11 @@ public class QGenerator {
 					pgNum++;
 					results = searchViaTitle(pgNum, keyWord, year);
 				}
-
 				MovieDb movie = iterator.next();
 				queMovie = movie;
+				ID = queMovie.getId();
+				
+				
 				
 				condition = movie.getOverview();
 				
@@ -211,7 +212,7 @@ public class QGenerator {
 		Question que = new Question(queText, 
 				           ans, aText, bText, cText, dText, 1, score);
 		randomizer(que);
-		generateStats(que,queMovie);
+		generateStats(que,ID);
 		return que;
 	}
 
@@ -341,7 +342,7 @@ public Question createCastQue(final String keyWord, final int score) {
 		Question que = new Question(queText, 
 		           ans, aText, bText, cText, dText, 1, score);
         randomizer(que);
-        generateStats(que,queMovie);
+        generateStats(que,ID);
 return que;
 	}
 	/**
@@ -622,7 +623,11 @@ return que;
 	 * for the primary movie in question.
 	 * @param Type: Question q 
 	 */
-	private static void generateStats(final Question q, final MovieDb m) {
+	private static void generateStats(final Question q, final int id) {
+		TmdbMovies tmdbMovies = tmdbApi.getMovies();
+		MovieDb m = tmdbMovies.getMovie(id, "en", MovieMethod.credits, MovieMethod.reviews, MovieMethod.videos);
+
+		
 		MovieStats stats = new MovieStats();
 		stats.setMoviePoster(m.getPosterPath());
 		stats.setMovieTitle(m.getTitle());
