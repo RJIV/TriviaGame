@@ -83,6 +83,70 @@ public class QGenerator {
 	public static ArrayList<Question> getQlist() {
 		return qlist;
 	}
+	
+	/**
+	 * createStatQue - Uses Tmdb to generate a question 
+	 * of type stat based on the given keyWord.Stat challanges user's
+	 * knowledge of budget and run times.
+	 * @param keyWord - key word for searching
+	 * @param score - Score 100-400, usually dependent on difficulty.
+	 * @param qType - Question type, ie. guess the year, or Movie or Crew.
+	 * @return que - Returns generated question.
+	 */
+	public Question createStatQue(final String keyWord, final int score) {
+		
+		//Variables
+
+		String queText = "N/a";
+		String ans = "A";
+		String aText = "0";
+		String bText = "0";
+		String cText = "0";
+		String dText = "0";
+		int year = 0;
+		int pgNum = 0;
+		
+		MovieResultsPage results = searchViaTitle(pgNum, keyWord, year);
+		
+		Iterator<MovieDb> iterator = results.iterator();
+
+		String condition = null;
+		do {
+			if (!iterator.hasNext()) {
+				pgNum++;
+				results = searchViaTitle(pgNum, keyWord, year);
+			}
+
+			MovieDb movie = iterator.next();
+			
+			condition = movie.getTitle();
+			
+			queText = ("This movie where: \n" 
+			+ condition
+			+ "\nwas/will be released?");
+			
+			ans = "A";
+			
+			aText = ("" 
+			+ (Integer.parseInt(movie.getReleaseDate().substring(0, 4))));
+			
+			bText = ("" + (Integer.parseInt(
+					movie.getReleaseDate().substring(0, 4)) + 1));
+			
+			cText = ("" + (Integer.parseInt(
+					movie.getReleaseDate().substring(0, 4)) - 1));
+			
+			dText = ("" + (Integer.parseInt(
+					movie.getReleaseDate().substring(0, 4)) - 2));
+		
+		} while ((condition.equals(null)) && (iterator.hasNext()));
+
+		
+		Question que = new Question(queText, 
+		           ans, aText, bText, cText, dText, 1, score);
+		randomizer(que);
+		return que;
+	}
 
 
 	/**
@@ -105,8 +169,7 @@ public class QGenerator {
 		String dText = "0";
 		int year = 0;
 		int pgNum = 0;
-		String path;
-
+		MovieDb queMovie;
 
 			MovieResultsPage results = searchViaTitle(pgNum, keyWord, year);
 			
@@ -120,6 +183,7 @@ public class QGenerator {
 				}
 
 				MovieDb movie = iterator.next();
+				queMovie = movie;
 				
 				condition = movie.getOverview();
 				
@@ -128,8 +192,6 @@ public class QGenerator {
 				+ "\nwas/will be released?");
 				
 				ans = "A";
-				
-				path = movie.getPosterPath();
 				
 				aText = ("" 
 				+ (Integer.parseInt(movie.getReleaseDate().substring(0, 4))));
@@ -147,17 +209,19 @@ public class QGenerator {
 
 			
 		Question que = new Question(queText, 
-				           ans, aText, bText, cText, dText, 1, score,path);
+				           ans, aText, bText, cText, dText, 1, score);
 		randomizer(que);
+		generateStats(que,queMovie);
 		return que;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
 	
 /**
- * createCastQue - 
- * @param keyWord
- * @param score
+ * createCastQue - Uses Tmdb to generate a question 
+ * of type cast based on the given keyWord.
+ * @param keyWord Type: String The keyword used to define search.
+ * @param score Type: int The score for the given question.
  * @return
  */
 public Question createCastQue(final String keyWord, final int score) {
@@ -172,7 +236,6 @@ public Question createCastQue(final String keyWord, final int score) {
 		String dText = "0";
 		int year = 0;
 		int pgNum = 0;
-		String path = null;;
 		
 		String cast1;
 		String cast2;
@@ -182,6 +245,8 @@ public Question createCastQue(final String keyWord, final int score) {
 		String cast6;
 		
 		int ID;
+		
+		MovieDb queMovie;
 		
 		List<PersonCast> castList;
 		
@@ -197,10 +262,14 @@ public Question createCastQue(final String keyWord, final int score) {
 				results = searchViaTitle(pgNum, keyWord, year);
 				iterator = results.iterator();
 			}
+
+			 queMovie = iterator.next();
 			
-			MovieDb movie = iterator.next();
+			MovieDb movie = queMovie;
 			
-			ID = movie.getId();
+			
+			
+			ID = queMovie.getId();
 			MovieDb Movie = tmdbMovies.getMovie(ID, "en", MovieMethod.credits, MovieMethod.reviews, MovieMethod.videos);
 			
 			castList = Movie.getCast();
@@ -233,12 +302,10 @@ public Question createCastQue(final String keyWord, final int score) {
 						
 				ans = "A";
 				
-				path = movie.getPosterPath();
-				
-				aText = (movie.getTitle() + " " + movie.getReleaseDate());
+				aText = (queMovie.getTitle() + " " + queMovie.getReleaseDate());
 				
 				try {
-				movie = iterator.next();
+				queMovie = iterator.next();
 				} catch(NoSuchElementException ref) {
 					pgNum++;
 					results = searchViaTitle(pgNum, keyWord, year);
@@ -246,10 +313,10 @@ public Question createCastQue(final String keyWord, final int score) {
 					movie = iterator.next();
 				} 
 
-				bText = (movie.getTitle() + " " + movie.getReleaseDate());
+				bText = (movie.getTitle() + " " + queMovie.getReleaseDate());
 				
 				try {
-				movie = iterator.next();
+				queMovie = iterator.next();
 				} catch(NoSuchElementException ref) {
 					pgNum++;
 					results = searchViaTitle(pgNum, keyWord, year);
@@ -257,10 +324,10 @@ public Question createCastQue(final String keyWord, final int score) {
 					movie = iterator.next();
 				} 
 				
-				cText = (movie.getTitle() + " " + movie.getReleaseDate());
+				cText = (movie.getTitle() + " " + queMovie.getReleaseDate());
 			
 				try {
-				movie = iterator.next();
+				queMovie = iterator.next();
 				} catch(NoSuchElementException ref) {
 					pgNum++;
 					results = searchViaTitle(pgNum, keyWord, year);
@@ -268,12 +335,13 @@ public Question createCastQue(final String keyWord, final int score) {
 					movie = iterator.next();
 				} 
 						
-				dText = (movie.getTitle() + " " + movie.getReleaseDate());
+				dText = (movie.getTitle() + " " + queMovie.getReleaseDate());
 			}
 		} while (!castFound);
 		Question que = new Question(queText, 
-		           ans, aText, bText, cText, dText, 1, score,path);
+		           ans, aText, bText, cText, dText, 1, score);
         randomizer(que);
+        generateStats(que,queMovie);
 return que;
 	}
 	/**
@@ -547,7 +615,24 @@ return que;
 		question.setCChoice(cText);
 		question.setDChoice(dText);
 
-			}
+	}
+	
+	
+	/**generateStats - helper method populates MovieStats object
+	 * for the primary movie in question.
+	 * @param Type: Question q 
+	 */
+	private static void generateStats(final Question q, final MovieDb m) {
+		MovieStats stats = new MovieStats();
+		stats.setMoviePoster(m.getPosterPath());
+		stats.setMovieTitle(m.getTitle());
+		stats.setMovieOverview(m.getOverview());
+		stats.setCast(m.getCast());
+		stats.setTrailers(m.getVideos());
+		stats.setReleaseDate(m.getReleaseDate());
+		q.setStats(stats);
+	}
+	
 	
 //	/**
 //	 * 

@@ -37,8 +37,8 @@ public class Question {
 	/**The score of the question.*/
 	private int score;
 	
-	/**The score of the question.*/
-	private String posterPath;
+	/**MovieStats object*/
+	public MovieStats stats;
 	
 	/** Default constructor.*/
 	public Question() {
@@ -50,7 +50,6 @@ public class Question {
 		this.cChoice = "Star Wars 7";
 		this.dChoice = "Star Wars 1";
 		this.category = 1;
-		this.posterPath = null;
 	}
 	
 	/**
@@ -71,8 +70,7 @@ public class Question {
 			        final String ansC, 
 			        final String ansD, 
 			        final int category, 
-			        final int score,
-			        final String path) {
+			        final int score) {
 		this.que = question;
 		this.correctAns = ansKey; 
 		this.userAns = null;
@@ -82,22 +80,15 @@ public class Question {
 		this.dChoice = ansD;
 		this.category = category;
 		this.score = score;
-		this.posterPath = path;
 
 	}
 	
-	/**Returns posterPath.
-	 * @return posterPath Type: String. File path of movie poster image. */
-	public String getMoviePoster() {
-		return posterPath;
+	public MovieStats getStats() {
+		return stats;
 	}
 
-	/**
-	 * Sets question text.
-	 * @param que Type String. File path of movie poster image.
-	 */
-	public void setMoviePoster(final String path) {
-		this.posterPath = path;
+	public void setStats(MovieStats stats) {
+		this.stats = stats;
 	}
 
 	/**Returns Question.
