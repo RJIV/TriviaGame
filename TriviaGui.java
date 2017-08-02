@@ -49,7 +49,7 @@ public class TriviaGui extends JFrame implements ActionListener {
 	 */
 	private JPanel gridPanel;
 
-	/** scorePane - contains 1x6 array of JLabels that display user scores. */
+	/** scorePane - contains 2x3 array of JLabels that display user scores. */
 	private JPanel scorePanel;
 
 	/**
@@ -236,7 +236,7 @@ public class TriviaGui extends JFrame implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(e.getSource()==Back){
+				if(e.getSource() == Back){
 					startupFrame.setVisible(false);
 					welcomeframe.setVisible(true);
 					//reloadUI();
@@ -306,16 +306,16 @@ public class TriviaGui extends JFrame implements ActionListener {
 						break;
 					case 2:
 						scorePanel.add(player1Label);
-						scorePanel.add(player1Score);
 						scorePanel.add(player2Label);
+						scorePanel.add(player1Score);
 						scorePanel.add(player2Score);
 						break;
 					case 3:
 						scorePanel.add(player1Label);
-						scorePanel.add(player1Score);
 						scorePanel.add(player2Label);
-						scorePanel.add(player2Score);
 						scorePanel.add(player3Label);
+						scorePanel.add(player1Score);
+						scorePanel.add(player2Score);
 						scorePanel.add(player3Score);
 						break;
 					}
