@@ -1,4 +1,4 @@
-package project;
+//package project;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -77,7 +77,7 @@ public class QuestionPanel extends JFrame implements
 	int delay = count * 1000;
 	TriviaGui g;
 	int nplayer=0;
-	private project.inforGui infor;
+	private inforGui infor;
 	/**
 	 * Constructor for objects of type QuestionPanel, 
 	 * that creates a frame and populates widgets.
@@ -87,7 +87,7 @@ public class QuestionPanel extends JFrame implements
 	 */
 	public QuestionPanel(final int index, final Score scoreBoard,TriviaGui game,int nplayer) {
 		frame = new JFrame();
-		frame.setPreferredSize(new Dimension(800, 500));
+		frame.setPreferredSize(new Dimension(800, 600));
 		
 		this.nplayer = nplayer;
 		
@@ -102,9 +102,9 @@ public class QuestionPanel extends JFrame implements
 		qpanel = new JPanel();
 		qpanel.setBounds(0, 0, 778, 213);
 		cpanel = new JPanel();
-		cpanel.setBounds(67, 221, 683, 97);
+		cpanel.setBounds(28, 216, 722, 186);
 		bpanel = new JPanel();
-		bpanel.setBounds(0, 368, 778, 60);
+		bpanel.setBounds(0, 468, 778, 60);
 		bG = new ButtonGroup();
 
 		pBar = new JProgressBar();
@@ -122,7 +122,7 @@ public class QuestionPanel extends JFrame implements
 		question.setRequestFocusEnabled(false);
 		question.setVerifyInputWhenFocusTarget(false);
 		question.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
-		question.setBounds(25, 16, 726, 194);
+		question.setBounds(28, 16, 722, 194);
 		question.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		question.setText(q.getQuestionAt(index).getQue());
 		question.setLineWrap(true);
@@ -153,7 +153,7 @@ public class QuestionPanel extends JFrame implements
 		qpanel.setLayout(null);
 
 		qpanel.add(question);
-		cpanel.setLayout(new GridLayout(2, 2, 0, 0));
+		cpanel.setLayout(new GridLayout(4, 1, 0, 10));
 		cpanel.add(choiceA);
 		cpanel.add(choiceB);
 		cpanel.add(choiceC);
@@ -165,7 +165,7 @@ public class QuestionPanel extends JFrame implements
 		frame.getContentPane().add(bpanel);
 
 		frame.pack();
-		frame.setSize(800, 500);
+		frame.setSize(800, 598);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
@@ -178,7 +178,7 @@ public class QuestionPanel extends JFrame implements
 		pBar.setStringPainted(false);
 		playerterm = new JLabel();
 		playerterm.setHorizontalAlignment(SwingConstants.CENTER);
-		playerterm.setBounds(297, 316, 169, 48);
+		playerterm.setBounds(303, 415, 169, 48);
 		frame.getContentPane().add(playerterm);
 		playerterm.setFont(font1);
 		frame.setDefaultCloseOperation(0);
@@ -193,22 +193,19 @@ public class QuestionPanel extends JFrame implements
 			if(e.getKeyCode() == KeyEvent.VK_Z){
 			setup();
 			playerterm.setText("Player 1");
-			player = 1;
-			//countdown();			
+			player = 1;			
 			}
 		}
 		if (nplayer==2) {
 			if(e.getKeyCode() == KeyEvent.VK_Z){
 				setup();
 				playerterm.setText("Player 1");
-				player = 1;
-				//countdown();			
+				player = 1;			
 				}
 			if(e.getKeyCode() == KeyEvent.VK_M){
 			setup();
 			playerterm.setText("Player 2");
 			player = 2;
-			//countdown();
 			}
 		}
 
@@ -217,20 +214,17 @@ public class QuestionPanel extends JFrame implements
 			if(e.getKeyCode() == KeyEvent.VK_Z){
 				setup();
 				playerterm.setText("Player 1");
-				player = 1;
-				//countdown();			
+				player = 1;		
 				}
 			if(e.getKeyCode() == KeyEvent.VK_M){
 			setup();
 			playerterm.setText("Player 2");
 			player = 2;
-			//countdown();
 			}
 			if( e.getKeyCode() == KeyEvent.VK_Q){
 			setup();
 			playerterm.setText("Player 3");
 			player = 3;
-			//countdown();
 			}
 		}
 	}

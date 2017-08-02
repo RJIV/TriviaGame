@@ -1,4 +1,4 @@
-package project;
+//package project;
 
 import java.awt.EventQueue;
 import java.awt.Image;
@@ -24,6 +24,8 @@ import javax.swing.JTable;
 import javax.swing.JList;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.border.MatteBorder;
+import java.awt.Color;
 
 public class inforGui {
 
@@ -36,24 +38,25 @@ public class inforGui {
 		inforframe = new JFrame("Information");
 		inforframe.setResizable(false);
 		inforframe.setPreferredSize(new Dimension(900, 750));
-		inforframe.setBounds(100, 100, 820, 483);
+		inforframe.setBounds(100, 100, 820, 626);
 		//inforframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		inforframe.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 814, 455);
+		panel.setBounds(0, 16, 814, 505);
 		panel.setAutoscrolls(true);
 		inforframe.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JLabel moviename = new JLabel(stats.getMovieTitle());
 		moviename.setHorizontalAlignment(SwingConstants.CENTER);
-		moviename.setFont(new Font("Times New Roman", Font.BOLD, 30));
+		moviename.setFont(new Font("Tahoma", Font.BOLD, 28));
 		
-		moviename.setBounds(384, 10, 394, 56);
+		moviename.setBounds(66, 0, 682, 73);
 		panel.add(moviename);
 		
 		JLabel movieposter = new JLabel();
+		movieposter.setBorder(new MatteBorder(2, 2, 2, 2, (Color) new Color(0, 0, 0)));
 		URL img;
 		BufferedImage imag = null;
 		try {
@@ -73,35 +76,33 @@ public class inforGui {
 		//System.out.println(stats.getMoviePoster());
 		
 		movieposter.setVisible(true);
-		movieposter.setBounds(36, 34, 312, 386);
+		movieposter.setBounds(36, 100, 312, 368);
 		panel.add(movieposter);
 		
 		JTextArea overview = new JTextArea(stats.getMovieOverview());
 		overview.setEditable(false);
 		overview.setLineWrap(true);
 		overview.setWrapStyleWord(true);
-		overview.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-		overview.setBounds(384, 87, 394, 129);
+		overview.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		overview.setBounds(384, 100, 394, 164);
 		panel.add(overview);
 		
 		String[] Colomn = {"Actor","Character"};
+		
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setAutoscrolls(true);
+		scrollPane.setBounds(384, 280, 394, 188);
+		panel.add(scrollPane);
 		JTable actor = new JTable(stats.getCastArray(),Colomn);
-		//JTable actor = new JTable();
+		actor.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		scrollPane.setViewportView(actor);
 		actor.setDragEnabled(true);
 		actor.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		actor.getTableHeader().setReorderingAllowed(false);
 		actor.setFocusable(false);
-		panel.add(actor);
 		actor.setPreferredScrollableViewportSize(new Dimension(500,50));
 		actor.setFillsViewportHeight(true);
-		actor.setBounds(386, 266, 392, 154);
-		
-		
-		//JScrollPane scrollPane = new JScrollPane();
-		JScrollPane scrollPane = new JScrollPane(actor);
-		scrollPane.setAutoscrolls(true);
-		scrollPane.setBounds(384, 266, 394, 156);
-		panel.add(scrollPane);
 		inforframe.getContentPane().add(panel);
 
 		inforframe.setVisible(true);
