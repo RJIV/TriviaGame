@@ -83,70 +83,6 @@ public class QGenerator {
 	public static ArrayList<Question> getQlist() {
 		return qlist;
 	}
-	
-	/**
-	 * createStatQue - Uses Tmdb to generate a question 
-	 * of type stat based on the given keyWord.Stat challanges user's
-	 * knowledge of budget and run times.
-	 * @param keyWord - key word for searching
-	 * @param score - Score 100-400, usually dependent on difficulty.
-	 * @param qType - Question type, ie. guess the year, or Movie or Crew.
-	 * @return que - Returns generated question.
-	 */
-	public Question createStatQue(final String keyWord, final int score) {
-		
-		//Variables
-
-		String queText = "N/a";
-		String ans = "A";
-		String aText = "0";
-		String bText = "0";
-		String cText = "0";
-		String dText = "0";
-		int year = 0;
-		int pgNum = 0;
-		
-		MovieResultsPage results = searchViaTitle(pgNum, keyWord, year);
-		
-		Iterator<MovieDb> iterator = results.iterator();
-
-		String condition = null;
-		do {
-			if (!iterator.hasNext()) {
-				pgNum++;
-				results = searchViaTitle(pgNum, keyWord, year);
-			}
-
-			MovieDb movie = iterator.next();
-			
-			condition = movie.getTitle();
-			
-			queText = ("This movie where: \n" 
-			+ condition
-			+ "\nwas/will be released?");
-			
-			ans = "A";
-			
-			aText = ("" 
-			+ (Integer.parseInt(movie.getReleaseDate().substring(0, 4))));
-			
-			bText = ("" + (Integer.parseInt(
-					movie.getReleaseDate().substring(0, 4)) + 1));
-			
-			cText = ("" + (Integer.parseInt(
-					movie.getReleaseDate().substring(0, 4)) - 1));
-			
-			dText = ("" + (Integer.parseInt(
-					movie.getReleaseDate().substring(0, 4)) - 2));
-		
-		} while ((condition.equals(null)) && (iterator.hasNext()));
-
-		
-		Question que = new Question(queText, 
-		           ans, aText, bText, cText, dText, 1, score);
-		randomizer(que);
-		return que;
-	}
 
 
 	/**
@@ -159,7 +95,8 @@ public class QGenerator {
 	 */
 	public Question createYearQue(final String keyWord, final int score) {
 		//Variables
-
+		Random rand = new Random();
+		
 		String queText = "N/a";
 		String ans = "A";
 		String aText = "0";
@@ -168,6 +105,11 @@ public class QGenerator {
 		String dText = "0";
 		int year = 0;
 		int pgNum = 0;
+		int randInt1;
+		int randInt2; 
+		int randInt3;
+		int randInt4;
+		
 		MovieDb queMovie;
 		int ID;
 			MovieResultsPage results = searchViaTitle(pgNum, keyWord, year);
@@ -197,14 +139,26 @@ public class QGenerator {
 				aText = ("" 
 				+ (Integer.parseInt(movie.getReleaseDate().substring(0, 4))));
 				
+				do{
+				randInt1 = rand.nextInt(12) - 6;
+				randInt2 = rand.nextInt(12) - 6;
+				randInt3 = rand.nextInt(12) - 6;
+				} while(randInt1 == randInt2 ||
+						randInt1 == randInt3 ||
+						randInt2 == randInt3 ||
+						randInt1 == 0 ||
+						randInt2 == 0 ||
+						randInt3 == 0);
+				
 				bText = ("" + (Integer.parseInt(
-						movie.getReleaseDate().substring(0, 4)) + 1));
+						movie.getReleaseDate().substring(0, 4)) + randInt1));
 				
 				cText = ("" + (Integer.parseInt(
-						movie.getReleaseDate().substring(0, 4)) - 1));
+						movie.getReleaseDate().substring(0, 4)) + randInt2));
+				
 				
 				dText = ("" + (Integer.parseInt(
-						movie.getReleaseDate().substring(0, 4)) - 2));
+						movie.getReleaseDate().substring(0, 4)) + randInt3));
 			
 			} while ((condition.equals(null)) && (iterator.hasNext()));
 
@@ -314,7 +268,7 @@ public Question createCastQue(final String keyWord, final int score) {
 					movie = iterator.next();
 				} 
 
-				bText = (movie.getTitle() + " " + queMovie.getReleaseDate());
+				bText = (queMovie.getTitle() + " " + queMovie.getReleaseDate());
 				
 				try {
 				queMovie = iterator.next();
@@ -325,7 +279,7 @@ public Question createCastQue(final String keyWord, final int score) {
 					movie = iterator.next();
 				} 
 				
-				cText = (movie.getTitle() + " " + queMovie.getReleaseDate());
+				cText = (queMovie.getTitle() + " " + queMovie.getReleaseDate());
 			
 				try {
 				queMovie = iterator.next();
@@ -336,7 +290,7 @@ public Question createCastQue(final String keyWord, final int score) {
 					movie = iterator.next();
 				} 
 						
-				dText = (movie.getTitle() + " " + queMovie.getReleaseDate());
+				dText = (queMovie.getTitle() + " " + queMovie.getReleaseDate());
 			}
 		} while (!castFound);
 		Question que = new Question(queText, 
