@@ -1,4 +1,4 @@
-package edu.gvsu.cis350.triviaGame;
+//package edu.gvsu.cis350.triviaGame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

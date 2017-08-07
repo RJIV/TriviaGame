@@ -1,4 +1,4 @@
-package edu.gvsu.cis350.triviaGame;
+//package edu.gvsu.cis350.triviaGame;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

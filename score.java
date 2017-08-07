@@ -1,4 +1,4 @@
-package edu.gvsu.cis350.triviaGame;
+//package edu.gvsu.cis350.triviaGame;
 /**
  * Score entity class contains information regarding the score of a single
  * trivia game. Made into class to pass score between classes. 

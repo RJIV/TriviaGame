@@ -1,4 +1,4 @@
-package edu.gvsu.cis350.triviaGame;
+//package edu.gvsu.cis350.triviaGame;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -46,7 +46,7 @@ public class InstructionWindow extends JFrame implements ActionListener{
 		imagePanel.setLayout(new GridLayout(3, 1, 0, 0));
 		
 		if(this.nPlayers == 1){
-			JLabel player1Label = new JLabel("Players 1: ");
+			JLabel player1Label = new JLabel("Player 1: ");
 			player1Label.setHorizontalAlignment(SwingConstants.RIGHT);
 			JLabel zLabel = new JLabel(new ImageIcon(getClass().getResource("letterZ.png")));
 			zLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -55,11 +55,11 @@ public class InstructionWindow extends JFrame implements ActionListener{
 		}
 		
 		if(this.nPlayers == 2){
-			JLabel player1Label = new JLabel("Players 1: ");
+			JLabel player1Label = new JLabel("Player 1: ");
 			player1Label.setHorizontalAlignment(SwingConstants.RIGHT);
 			JLabel zLabel = new JLabel(new ImageIcon(getClass().getResource("letterZ.png")));
 			zLabel.setHorizontalAlignment(SwingConstants.LEFT);
-			JLabel player2Label = new JLabel("Players 2: ");
+			JLabel player2Label = new JLabel("Player 2: ");
 			player2Label.setHorizontalAlignment(SwingConstants.RIGHT);
 			JLabel mLabel = new JLabel(new ImageIcon(getClass().getResource("letterM.png")));
 			mLabel.setHorizontalAlignment(SwingConstants.LEFT);
@@ -93,7 +93,7 @@ public class InstructionWindow extends JFrame implements ActionListener{
 		pane.add(labelPanel);
 		pane.add(imagePanel);
 		frame.setPreferredSize(new Dimension(450, 400));
-		frame.setBounds(100,100,450,400);
+		frame.setBounds(80,130,450,400);
 		frame.getContentPane().add(pane);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);

@@ -1,4 +1,4 @@
-package edu.gvsu.cis350.triviaGame;
+//package edu.gvsu.cis350.triviaGame;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -77,7 +77,7 @@ public class QuestionPanel extends JFrame implements
 	int delay = count * 1000;
 	TriviaGui g;
 	int nplayer=0;
-	private InfoGui infor;
+	private inforGui infor;
 	/**
 	 * Constructor for objects of type QuestionPanel, 
 	 * that creates a frame and populates widgets.
@@ -292,7 +292,7 @@ public class QuestionPanel extends JFrame implements
 		g.player2Score.setText("" + s.getplayer2());
 		g.player3Score.setText("" + s.getplayer3());
 		
-		infor = new InfoGui(qGen.getQuestionAt(index).getStats());
+		infor = new inforGui(qGen.getQuestionAt(index).getStats());
 	}
 	
 	private void setup() {
