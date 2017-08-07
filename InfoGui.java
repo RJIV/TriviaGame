@@ -27,14 +27,14 @@ import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 import java.awt.Color;
 
-public class inforGui {
+public class InfoGui {
 
 	private JFrame inforframe;
 
 	/**
 	 * Create the application.
 	 */
-	public inforGui(MovieStats stats) {
+	public InfoGui(MovieStats stats) {
 		inforframe = new JFrame("Information");
 		inforframe.setResizable(false);
 		inforframe.setPreferredSize(new Dimension(900, 750));
